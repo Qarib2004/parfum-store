@@ -1,0 +1,199 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+enum Role{
+  USER
+  OWNER
+  ADMIN
+}
+
+
+enum RequestStatus{
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum OrderStatus{
+  PENDING
+  PROCESSING
+  COMPLETED
+  CANCELLED
+}
+
+
+model User{
+  id String @id @default(uuid())
+  email String @unique
+  username String @unique
+  password String 
+  role Role @default(USER)
+  avatar String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime  @updatedAt
+
+  prodcuts Product[]
+  shop Shop?
+  ownerRequests OwnerRequest[]
+  sentMessages Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+
+  refreshTokens     RefreshToken[]
+  notifications     Notification[]
+  orders            Order[]
+  
+  @@map("users")
+
+
+}
+
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  @@map("refresh_tokens")
+}
+
+
+
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  brand         String
+  volume        Int      
+  fragranceType String   
+  quantity      Int
+  price         Float
+  description   String?  @db.Text
+  imageUrl      String?
+  ownerId       String
+  owner         User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  orderItems    OrderItem[]
+  
+  @@index([ownerId])
+  @@map("products")
+}
+
+
+
+
+model OwnerRequest {
+  id              String        @id @default(uuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productsCount   Int           
+  totalQuantity   Int          
+  productDetails  Json          
+  status          RequestStatus @default(PENDING)
+  adminComment    String?       @db.Text
+  reviewedBy      String?       
+  reviewedAt      DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@map("owner_requests")
+}
+
+
+
+
+model Shop {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  address     String?
+  logoUrl     String?
+  ownerId     String   @unique
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("shops")
+}
+
+
+
+
+
+model Message {
+  id         String   @id @default(uuid())
+  content    String   @db.Text
+  senderId   String
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId String
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  
+  @@index([senderId, receiverId])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   
+  title     String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  link      String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  
+  @@index([userId, read])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  orderNumber     String      @unique
+  userId          String
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalAmount     Float
+  status          OrderStatus @default(PENDING)
+  stripePaymentId String?
+  stripeSessionId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  items           OrderItem[]
+  
+  @@index([userId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+  
+  @@index([orderId])
+  @@map("order_items")
+}
