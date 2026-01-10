@@ -1,6 +1,6 @@
 import type { NextFunction,Request,Response } from "express";
-import JWTUtil from "../utils/jwt.util";
 import { prisma } from '../config/database';
+import { verifyAccessToken } from "../utils/jwt.util";
 
 
 declare global {
@@ -28,7 +28,7 @@ export class AuthMiddleware {
 
       const token = authHeader.substring(7);
 
-      const payload = JWTUtil.verifyAccessToken(token);
+      const payload = verifyAccessToken(token);
 
       const user = await prisma.user.findUnique({
         where: { id: payload.userId },
@@ -71,7 +71,7 @@ export class AuthMiddleware {
 
       if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.substring(7);
-        const payload = JWTUtil.verifyAccessToken(token);
+        const payload = verifyAccessToken(token);
 
         const user = await prisma.user.findUnique({
           where: { id: payload.userId },

@@ -96,4 +96,10 @@ export class JWTUtil {
 }
 
 
-export default JWTUtil;
+export const generateAccessToken =  JWTUtil.generateAccessToken;
+export const generateRefreshToken =  JWTUtil.generateRefreshToken;
+export const saveRefreshToken =  JWTUtil.saveRefreshToken;
+export const removeRefreahToken =  JWTUtil.removeRefreahToken;
+export const findRefreshToken =  JWTUtil.findRefreshToken;
+export const verifyRefreshToken =  JWTUtil.verifyRefreshToken;
+export const verifyAccessToken =  JWTUtil.verifyAccessToken;

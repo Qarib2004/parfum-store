@@ -29,4 +29,5 @@ export class HashUtil {
 }
 
 
-export default HashUtil;
+export const hashPassword = HashUtil.hashPassword;
+export const verifyPassword = HashUtil.verifyPassword;
