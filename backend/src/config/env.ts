@@ -5,8 +5,8 @@ const envSchema = z.object({
   
   JWT_ACCESS_SECRET: z.string().min(32),
   JWT_REFRESH_SECRET: z.string().min(32),
-  JWT_ACCESS_EXPIRY: z.string().default('15m'),
-  JWT_REFRESH_EXPIRY: z.string().default('7d'),
+  JWT_ACCESS_EXPIRY: z.string().default('15m') as z.ZodType<import('jsonwebtoken').SignOptions['expiresIn']>,
+  JWT_REFRESH_EXPIRY: z.string().default('7d')  as z.ZodType<import('jsonwebtoken').SignOptions['expiresIn']>,
   
   PORT: z.string().default('5000'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
