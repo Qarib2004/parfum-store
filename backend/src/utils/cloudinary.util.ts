@@ -123,4 +123,14 @@ export class CloudinaryUtil {
   }
 }
 
-export default CloudinaryUtil;
+
+
+export const uploadImage = CloudinaryUtil.uploadImage
+export const uploadMultipleImage = CloudinaryUtil.uploadMultipleImages
+export const deleteImage = CloudinaryUtil.deleteImage
+export const deleteMultipleImages = CloudinaryUtil.deleteMultipleImages
+export const getOptimizedUrl = CloudinaryUtil.getOptimizedUrl
+export const isImageUrl = CloudinaryUtil.isImageFile
+export const validateFileSize = CloudinaryUtil.validateFileSize
+
+
