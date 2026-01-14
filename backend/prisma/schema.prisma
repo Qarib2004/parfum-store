@@ -41,7 +41,7 @@ model User{
   createdAt DateTime @default(now())
   updatedAt DateTime  @updatedAt
 
-  prodcuts Product[]
+  products Product[]
   shop Shop?
   ownerRequests OwnerRequest[]
   sentMessages Message[] @relation("SentMessages")
@@ -89,6 +89,7 @@ model Product {
   orderItems    OrderItem[]
   
   @@index([ownerId])
+  @@index([slug])
   @@map("products")
 }
 
@@ -119,6 +120,7 @@ model OwnerRequest {
 
 model Shop {
   id          String   @id @default(uuid())
+  slug        String? @unique 
   name        String
   description String?  @db.Text
   address     String?
@@ -128,6 +130,8 @@ model Shop {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   
+
+  @@index([slug])
   @@map("shops")
 }
 
