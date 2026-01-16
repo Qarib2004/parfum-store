@@ -13,3 +13,5 @@ export * from './cors.middleware';
 export * from './upload.middleware';
 
 export * from './asyncHandler.middleware';
+
+export * from './rawBody.middleware';

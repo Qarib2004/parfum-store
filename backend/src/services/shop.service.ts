@@ -1,6 +1,7 @@
 import { prisma } from '../config/database';
 import { AppError } from '../middleware';
 import { uploadImage, deleteImage } from '../utils/cloudinary.util';
+import { generateUniqueShopSlug } from '../utils/slug.utils';
 
 interface CreateShopData {
   name: string;
@@ -34,10 +35,14 @@ export const createShop = async (ownerId: string, data: CreateShopData) => {
     throw new AppError('you have shop', 400);
   }
 
+
+  const slug = await generateUniqueShopSlug(data.name)
+
   const shop = await prisma.shop.create({
     data: {
       ownerId,
       name: data.name,
+      slug,
       description: data.description,
       address: data.address,
     },
@@ -115,6 +120,54 @@ export const getAllShops = async (filters: {
 export const getShopById = async (shopId: string) => {
   const shop = await prisma.shop.findUnique({
     where: { id: shopId },
+    include: {
+      owner: {
+        select: {
+          id: true,
+          username: true,
+          avatar: true,
+          email: true,
+          createdAt: true,
+        },
+      },
+    },
+  });
+
+  if (!shop) {
+    throw new AppError('shop not found', 404);
+  }
+
+
+  const products = await prisma.product.findMany({
+    where: { ownerId: shop.ownerId },
+    take: 12,
+    orderBy: { createdAt: 'desc' },
+  });
+
+
+  const stats = await prisma.product.aggregate({
+    where: { ownerId: shop.ownerId },
+    _count: { id: true },
+    _sum: { quantity: true },
+  });
+
+  return {
+    ...shop,
+    products,
+    stats: {
+      totalProducts: stats._count.id || 0,
+      totalQuantity: stats._sum.quantity || 0,
+    },
+  };
+};
+
+
+
+
+
+export const getShopBySlug = async (slug: string) => {
+  const shop = await prisma.shop.findUnique({
+    where: { slug },
     include: {
       owner: {
         select: {
@@ -409,6 +462,47 @@ export const getShopStats = async (shopId: string) => {
     orders: {
       total: orderStats._count.id || 0,
       totalRevenue: orderStats._sum.totalAmount || 0,
+    },
+  };
+};
+
+
+
+export const getShopProductsBySlug = async (
+  slug: string,
+  page: number = 1,
+  limit: number = 20
+) => {
+  const shop = await prisma.shop.findUnique({
+    where: { slug },
+    select: { ownerId: true },
+  });
+
+  if (!shop) {
+    throw new AppError('Магазин не найден', 404);
+  }
+
+  const skip = (page - 1) * limit;
+
+  const [products, total] = await Promise.all([
+    prisma.product.findMany({
+      where: { ownerId: shop.ownerId },
+      skip,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.product.count({
+      where: { ownerId: shop.ownerId },
+    }),
+  ]);
+
+  return {
+    products,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
     },
   };
 };

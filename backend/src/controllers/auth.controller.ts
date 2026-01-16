@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
-import type { LoginInput, RegisterInput } from "../schemas/auth.schema";
+import type { LoginInput, RefreshTokenInput, RegisterInput } from "../schemas/auth.schema";
 import * as authService from '../services/auth.service';
-import { success } from "zod";
 
 
 
@@ -49,6 +48,19 @@ export const logout = async (req:Request,res:Response) => {
 
 
 }
+
+
+export const refreshToken = async (req: Request, res: Response) => {
+  const { refreshToken }: RefreshTokenInput = req.body;
+
+  const result = await authService.refreshAccessToken(refreshToken);
+
+  res.json({
+    success: true,
+    message: 'Токен обновлен',
+    data: result,
+  });
+};
 
 
 
