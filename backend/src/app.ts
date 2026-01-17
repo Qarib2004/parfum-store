@@ -61,7 +61,6 @@ setInterval(() => {
   cleanExpiredTokens();
 }, 60 * 60 * 1000);
 
-// Запуск сервера
 const PORT = env.PORT || 5000;
 
 httpServer.listen(PORT, () => {

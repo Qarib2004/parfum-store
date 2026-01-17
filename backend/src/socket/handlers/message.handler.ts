@@ -89,7 +89,7 @@ export const messageHandler = (io: Server, socket: AuthenticatedSocket) => {
         data: {
           userId: receiverId,
           type: 'MESSAGE',
-          title: 'Новое сообщение',
+          title: 'New message',
           message: `${message.sender.username}: ${content.substring(0, 50)}${content.length > 50 ? '...' : ''}`,
           link: `/messages/${userId}`,
           metadata: { messageId: message.id, senderId: userId },
@@ -144,7 +144,7 @@ export const messageHandler = (io: Server, socket: AuthenticatedSocket) => {
       });
     } catch (error) {
       console.error('Get messages error:', error);
-      socket.emit('error', { message: 'Ошибка при получении сообщений' });
+      socket.emit('error', { message: 'error for get message' });
     }
   });
 
