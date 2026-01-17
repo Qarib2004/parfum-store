@@ -103,3 +103,4 @@ export const removeRefreahToken =  JWTUtil.removeRefreahToken;
 export const findRefreshToken =  JWTUtil.findRefreshToken;
 export const verifyRefreshToken =  JWTUtil.verifyRefreshToken;
 export const verifyAccessToken =  JWTUtil.verifyAccessToken;
+export const cleanExpiredTokens =  JWTUtil.cleanExpiredTokens;
