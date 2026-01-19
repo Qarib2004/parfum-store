@@ -1,13 +1,13 @@
-import { ApiResponse, Order, OwnerRequest, Product, Shop, User } from "@/types";
+import { ApiResponse, AppNotification, AuthResponse, Order, OwnerRequest, Product, Shop, User } from "@/types";
 import axiosInstance from "./axios";
 
 //auth
 export const authApi = {
   register: (data: { email: string; username: string; password: string }) =>
-    axiosInstance.post<ApiResponse<ApiResponse>>("/auth/register", data),
+    axiosInstance.post<ApiResponse<AuthResponse>>("/auth/register", data),
 
   login: (data: { email: string; password: string }) =>
-    axiosInstance.post<ApiResponse<ApiResponse>>("/auth/login", data),
+    axiosInstance.post<ApiResponse<AuthResponse>>("/auth/login", data),
 
   logout: (refreshToken: string) =>
     axiosInstance.post<ApiResponse>("/auth/logout", { refreshToken }),
@@ -18,9 +18,8 @@ export const authApi = {
       { refreshToken }
     ),
 
-  getUserCurrent: () => {
-    axiosInstance.get<ApiResponse<User>>("/auth/me");
-  },
+  getUserCurrent: () => 
+    axiosInstance.get<ApiResponse<User>>("/auth/me")
 };
 
 //user
@@ -167,11 +166,11 @@ export const shopApi = {
 };
 
 //notifications
-export const notificationApi = {
+export const appNotificationApi = {
   getNotifications: (params?: { page?: number; limit?: number }) =>
     axiosInstance.get<
       ApiResponse<{
-        notifications: Notification[];
+        notifications: AppNotification[];
         unreadCount: number;
         pagination: any;
       }>

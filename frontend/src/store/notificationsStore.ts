@@ -1,33 +1,33 @@
 import { create } from 'zustand';
-import { Notification } from '@/types';
+import { AppNotification} from '@/types';
 
-interface NotificationState {
-  notifications: Notification[];
+interface AppNotificationState {
+  AppNotifications: AppNotification[];
   unreadCount: number;
-  setNotifications: (notifications: Notification[]) => void;
-  addNotification: (notification: Notification) => void;
+  setAppNotifications: (AppNotifications: AppNotification[]) => void;
+  addAppNotification: (AppNotification: AppNotification) => void;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
-  removeNotification: (id: string) => void;
+  removeAppNotification: (id: string) => void;
   setUnreadCount: (count: number) => void;
 }
 
-export const useNotificationStore = create<NotificationState>((set) => ({
-  notifications: [],
+export const useAppNotificationStore = create<AppNotificationState>((set) => ({
+  AppNotifications: [],
   unreadCount: 0,
 
-  setNotifications: (notifications) =>
-    set({ notifications }),
+  setAppNotifications: (AppNotifications) =>
+    set({ AppNotifications }),
 
-  addNotification: (notification) =>
+  addAppNotification: (AppNotification) =>
     set((state) => ({
-      notifications: [notification, ...state.notifications],
+      AppNotifications: [AppNotification, ...state.AppNotifications],
       unreadCount: state.unreadCount + 1,
     })),
 
   markAsRead: (id) =>
     set((state) => ({
-      notifications: state.notifications.map((n) =>
+      AppNotifications: state.AppNotifications.map((n) =>
         n.id === id ? { ...n, read: true } : n
       ),
       unreadCount: Math.max(0, state.unreadCount - 1),
@@ -35,16 +35,16 @@ export const useNotificationStore = create<NotificationState>((set) => ({
 
   markAllAsRead: () =>
     set((state) => ({
-      notifications: state.notifications.map((n) => ({ ...n, read: true })),
+      AppNotifications: state.AppNotifications.map((n) => ({ ...n, read: true })),
       unreadCount: 0,
     })),
 
-  removeNotification: (id) =>
+  removeAppNotification: (id) =>
     set((state) => {
-      const notification = state.notifications.find((n) => n.id === id);
+      const AppNotification = state.AppNotifications.find((n) => n.id === id);
       return {
-        notifications: state.notifications.filter((n) => n.id !== id),
-        unreadCount: notification && !notification.read
+        AppNotifications: state.AppNotifications.filter((n) => n.id !== id),
+        unreadCount: AppNotification && !AppNotification.read
           ? Math.max(0, state.unreadCount - 1)
           : state.unreadCount,
       };

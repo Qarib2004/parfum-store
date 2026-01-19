@@ -65,12 +65,12 @@ export interface Conversation {
   unreadCount: number;
 }
 
-export type NotificationType = 'MESSAGE' | 'ORDER' | 'REQUEST_STATUS' | 'PRODUCT_UPDATE' | 'SYSTEM';
+export type AppNotificationType = 'MESSAGE' | 'ORDER' | 'REQUEST_STATUS' | 'PRODUCT_UPDATE' | 'SYSTEM';
 
-export interface Notification {
+export interface AppNotification {
   id: string;
   userId: string;
-  type: NotificationType;
+  type: AppNotificationType;
   title: string;
   message: string;
   read: boolean;
