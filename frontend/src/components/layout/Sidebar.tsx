@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Home,
   Package,
@@ -12,43 +12,46 @@ import {
   FileText,
   Users,
   Settings,
-} from 'lucide-react';
-import style from './sidebar.module.scss';
-
+} from "lucide-react";
+import style from "./sidebar.module.scss";
 
 interface SidebarProps {
-    open: boolean; 
-  }
+  open: boolean;
+  onClose: () => void;
+}
 
-export function Sidebar({open}:SidebarProps) {
+export function Sidebar({ open, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { user } = useAuth();
 
   const isActive = (path: string) => pathname === path;
 
   const userLinks = [
-    { href: '/dashboard', label: 'Main', icon: Home },
-    { href: '/dashboard/products', label: 'Products', icon: Package },
-    { href: '/dashboard/shops', label: 'Stores', icon: Store },
-    { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
-    { href: '/dashboard/orders', label: 'Orders', icon: ShoppingBag },
+    { href: "/dashboard", label: "Home", icon: Home },
+    { href: "/dashboard/products", label: "Products", icon: Package },
+    { href: "/dashboard/shops", label: "Stores", icon: Store },
+    { href: "/dashboard/messages", label: "Messagets", icon: MessageSquare },
+    { href: "/dashboard/orders", label: "Orders", icon: ShoppingBag },
   ];
 
   const ownerLinks = [
-    { href: '/dashboard/my-products', label: 'My products', icon: Package },
-    { href: '/dashboard/my-shop', label: 'My stores', icon: Store },
-    { href: '/dashboard/my-orders', label: 'Product orders', icon: ShoppingBag },
+    { href: "/dashboard/my-products", label: "My  products", icon: Package },
+    { href: "/dashboard/my-shop", label: "My stores", icon: Store },
+    {
+      href: "/dashboard/my-orders",
+      label: "Product orders",
+      icon: ShoppingBag,
+    },
   ];
 
   const adminLinks = [
-    { href: '/dashboard/admin/requests', label: 'Requests', icon: FileText },
-    { href: '/dashboard/admin/users', label: 'Users', icon: Users },
+    { href: "/dashboard/admin/requests", label: "Requests", icon: FileText },
+    { href: "/dashboard/admin/users", label: "Users", icon: Users },
   ];
 
   return (
-    <aside className={`${style.aside} ${open ? style.open : style.closed}`}>
+    <aside className={`${style.aside} ${open ? style.asideOpen : ""}`}>
       <nav className={style.nav}>
-
         <div className={style.section}>
           <p className={style.sectionTitle}>Basics</p>
           <ul className={style.list}>
@@ -58,7 +61,10 @@ export function Sidebar({open}:SidebarProps) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`${style.link} ${isActive(link.href) ? style.linkActive : ''}`}
+                    className={`${style.link} ${
+                      isActive(link.href) ? style.linkActive : ""
+                    }`}
+                    onClick={onClose}
                   >
                     <Icon size={18} className={style.linkIcon} />
                     <span>{link.label}</span>
@@ -69,17 +75,21 @@ export function Sidebar({open}:SidebarProps) {
           </ul>
         </div>
 
-        {user?.role === 'USER' && (
+        {user?.role === "USER" && (
           <div className={style.ownerBanner}>
-            <Link href="/dashboard/owner-request" className={style.ownerBannerBtn}>
+            <Link
+              href="/dashboard/owner-request"
+              className={style.ownerBannerBtn}
+              onClick={onClose}
+            >
               Become an owner
             </Link>
           </div>
         )}
 
-        {(user?.role === 'OWNER' || user?.role === 'ADMIN') && (
+        {(user?.role === "OWNER" || user?.role === "ADMIN") && (
           <div className={style.section}>
-            <p className={style.sectionTitle}>Владелец</p>
+            <p className={style.sectionTitle}>Owner</p>
             <ul className={style.list}>
               {ownerLinks.map((link) => {
                 const Icon = link.icon;
@@ -87,7 +97,10 @@ export function Sidebar({open}:SidebarProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className={`${style.link} ${isActive(link.href) ? style.linkActive : ''}`}
+                      className={`${style.link} ${
+                        isActive(link.href) ? style.linkActive : ""
+                      }`}
+                      onClick={onClose}
                     >
                       <Icon size={18} className={style.linkIcon} />
                       <span>{link.label}</span>
@@ -99,7 +112,7 @@ export function Sidebar({open}:SidebarProps) {
           </div>
         )}
 
-        {user?.role === 'ADMIN' && (
+        {user?.role === "ADMIN" && (
           <div className={style.section}>
             <p className={style.sectionTitle}>Admin</p>
             <ul className={style.list}>
@@ -109,7 +122,10 @@ export function Sidebar({open}:SidebarProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className={`${style.link} ${isActive(link.href) ? style.linkActive : ''}`}
+                      className={`${style.link} ${
+                        isActive(link.href) ? style.linkActive : ""
+                      }`}
+                      onClick={onClose}
                     >
                       <Icon size={18} className={style.linkIcon} />
                       <span>{link.label}</span>
@@ -124,13 +140,15 @@ export function Sidebar({open}:SidebarProps) {
         <div className={style.settingsWrap}>
           <Link
             href="/dashboard/settings"
-            className={`${style.link} ${isActive('/dashboard/settings') ? style.linkActive : ''}`}
+            className={`${style.link} ${
+              isActive("/dashboard/settings") ? style.linkActive : ""
+            }`}
+            onClick={onClose}
           >
             <Settings size={18} className={style.linkIcon} />
             <span>Settings</span>
           </Link>
         </div>
-
       </nav>
     </aside>
   );

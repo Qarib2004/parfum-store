@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Sidebar } from '@/components/layout/Sidebar';
+import styles from './layout.module.scss';
 
 export default function DashboardLayout({
   children,
@@ -13,7 +14,7 @@ export default function DashboardLayout({
 }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const [sidebarOpen, setSidebarOpen] = useState(false); // состояние Sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -23,24 +24,30 @@ export default function DashboardLayout({
 
   if (isLoading) {
     return (
-      <div>
+      <div className={styles.loading}>
         <p>Loading...</p>
       </div>
     );
   }
 
-  if (!isAuthenticated) {
-    return null;
-  }
+  if (!isAuthenticated) return null;
 
   return (
-    <div className="dashboard-layout">
+    <div className={styles.root}>
       <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      <div className="dashboard-main" style={{ display: 'flex' }}>
-        <Sidebar open={sidebarOpen} />
+      <div className={styles.body}>
+        {/* Overlay — закрывает сайдбар по клику на мобиле */}
+        {sidebarOpen && (
+          <div
+            className={styles.overlay}
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
 
-        <main style={{ flex: 1, padding: '1rem' }}>{children}</main>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+        <main className={styles.main}>{children}</main>
       </div>
     </div>
   );

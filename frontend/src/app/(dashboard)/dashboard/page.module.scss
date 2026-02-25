@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+$card-bg      : #ffffff;
+
+$bp-lg : 900px;
+$bp-md : 680px;
+$bp-sm : 480px;
+
+.page {
+  padding: 32px 36px;
+  max-width: 1100px;
+  font-family: 'Jost', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+
+  @media (max-width: $bp-lg) { padding: 24px; gap: 28px; }
+  @media (max-width: $bp-md) { padding: 20px 16px; gap: 24px; }
+  @media (max-width: $bp-sm) { padding: 16px 12px; gap: 20px; }
+}
+
+.stateMsg {
+  padding: 48px;
+  text-align: center;
+  color: $text-hint;
+  font-family: 'Jost', sans-serif;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.headerTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+  letter-spacing: 0.01em;
+
+  @media (max-width: $bp-md) { font-size: 28px; }
+  @media (max-width: $bp-sm) { font-size: 24px; }
+}
+
+.headerSub {
+  font-size: 14px;
+  font-weight: 300;
+  color: $text-muted;
+  margin: 0;
+
+  @media (max-width: $bp-sm) { font-size: 13px; }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  @media (max-width: $bp-lg) { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (max-width: $bp-sm) { gap: 10px; }
+}
+
+.statCard {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(90, 80, 160, 0.05);
+
+  @media (max-width: $bp-md) { padding: 14px; gap: 12px; border-radius: 14px; }
+  @media (max-width: $bp-sm) { padding: 12px; gap: 10px; border-radius: 12px; }
+}
+
+.statIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: $input-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $purple-start;
+  flex-shrink: 0;
+
+  @media (max-width: $bp-sm) { width: 36px; height: 36px; border-radius: 10px; }
+}
+
+.statIconAccent {
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(123, 111, 212, 0.3);
+}
+
+.statInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: $text-hint;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: $bp-sm) { font-size: 11px; }
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+
+  @media (max-width: $bp-md) { font-size: 18px; }
+  @media (max-width: $bp-sm) { font-size: 16px; }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: $bp-sm) { gap: 12px; }
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+  letter-spacing: 0.01em;
+
+  @media (max-width: $bp-sm) { font-size: 20px; }
+}
+
+.viewAll {
+  font-size: 13px;
+  font-weight: 500;
+  color: $purple-start;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+
+  &:hover { opacity: 0.75; }
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+
+  @media (max-width: $bp-md) { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: $bp-sm) { grid-template-columns: 1fr; gap: 8px; }
+}
+
+.actionCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 18px;
+  text-decoration: none;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(90, 80, 160, 0.04);
+
+  &:hover {
+    border-color: rgba($purple-start, 0.3);
+    box-shadow: 0 4px 20px rgba(123, 111, 212, 0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: $bp-sm) { padding: 14px; border-radius: 14px; gap: 12px; }
+}
+
+.actionIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: $input-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $purple-start;
+  flex-shrink: 0;
+
+  @media (max-width: $bp-sm) { width: 36px; height: 36px; }
+}
+
+.actionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 3px;
+
+  @media (max-width: $bp-sm) { font-size: 13px; }
+}
+
+.actionDesc {
+  font-size: 12px;
+  color: $text-hint;
+  margin: 0;
+  font-weight: 300;
+
+  @media (max-width: $bp-sm) { font-size: 11px; }
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+
+  @media (max-width: $bp-lg)  { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: $bp-md)  { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: $bp-sm)  { gap: 8px; }
+}
+
+.productCard {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(90, 80, 160, 0.04);
+
+  &:hover {
+    border-color: rgba($purple-start, 0.3);
+    box-shadow: 0 6px 24px rgba(123, 111, 212, 0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: $bp-sm) { border-radius: 12px; }
+}
+
+.productImg {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: $input-bg;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.productImgPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-hint;
+}
+
+.productInfo {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  @media (max-width: $bp-sm) { padding: 8px; }
+}
+
+.productName {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: $bp-sm) { font-size: 12px; }
+}
+
+.productBrand {
+  font-size: 12px;
+  color: $text-hint;
+  margin: 0;
+  font-weight: 300;
+
+  @media (max-width: $bp-sm) { font-size: 11px; }
+}
+
+.productMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.productPrice {
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(135deg, $purple-start, $purple-end);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @media (max-width: $bp-sm) { font-size: 13px; }
+}
+
+.productVolume {
+  font-size: 11px;
+  color: $text-hint;
+  background: $input-bg;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.shops {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+
+  @media (max-width: $bp-md) { grid-template-columns: 1fr; gap: 10px; }
+}
+
+.shopCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 18px;
+  text-decoration: none;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(90, 80, 160, 0.04);
+
+  &:hover {
+    border-color: rgba($purple-start, 0.3);
+    box-shadow: 0 6px 24px rgba(123, 111, 212, 0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: $bp-sm) { padding: 14px; gap: 12px; border-radius: 14px; }
+}
+
+.shopLogo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: $input-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $purple-start;
+  flex-shrink: 0;
+  overflow: hidden;
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.shopInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.shopName {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.shopDesc {
+  font-size: 12px;
+  color: $text-muted;
+  margin: 0;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shopAddress {
+  font-size: 11px;
+  color: $text-hint;
+  margin: 0;
+}
+
+.ownerBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: linear-gradient(135deg, rgba($purple-start, 0.06) 0%, rgba($purple-end, 0.06) 100%);
+  border: 1px dashed rgba($purple-start, 0.25);
+  border-radius: 20px;
+  padding: 24px;
+
+  @media (max-width: $bp-md) {
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  @media (max-width: $bp-sm) { padding: 16px; }
+}
+
+.ownerBannerIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, $purple-start, $purple-end);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(123, 111, 212, 0.3);
+
+  @media (max-width: $bp-md) { width: 42px; height: 42px; }
+}
+
+.ownerBannerBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ownerBannerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+
+  @media (max-width: $bp-sm) { font-size: 15px; }
+}
+
+.ownerBannerDesc {
+  font-size: 13px;
+  color: $text-muted;
+  margin: 0;
+  font-weight: 300;
+  line-height: 1.5;
+
+  @media (max-width: $bp-sm) { font-size: 12px; }
+}
+
+.ownerBannerBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 9px 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(123, 111, 212, 0.3);
+  transition: opacity 0.18s, transform 0.15s;
+
+  &:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  @media (max-width: $bp-md) { width: 100%; }
+}
+
+.empty {
+  padding: 32px;
+  text-align: center;
+  color: $text-hint;
+  font-size: 14px;
+  background: $input-bg;
+  border-radius: 14px;
+}

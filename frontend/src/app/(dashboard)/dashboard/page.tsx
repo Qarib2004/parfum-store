@@ -1,8 +1,6 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import { orderApi, shopApi } from "@/lib/api/endpoints";
 import Link from "next/link";
 import {
   Package,
@@ -12,10 +10,10 @@ import {
   Users,
   MessageSquare,
 } from "lucide-react";
-import { useProduct, useProducts } from "@/hooks/useProduct";
-import style from "./page.module.scss";
+import { useProducts } from "@/hooks/useProduct";
 import { useShops } from "@/hooks/useShops";
 import { useOrderStats } from "@/hooks/useOrderStats";
+import style from "./page.module.scss";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -24,166 +22,182 @@ export default function DashboardPage() {
   const { shopsData, isLoading: shopsLoading, error: shopsError } = useShops(3);
   const { orderStats, isLoading: statsLoading } = useOrderStats(!!user);
 
-  if (productsLoading || shopsLoading || statsLoading) return <p>Loading...</p>;
-  if (shopsError) return <p>Error loading shops</p>;
+  if (productsLoading || shopsLoading || statsLoading)
+    return <p className={style.stateMsg}>Loading...</p>;
+  if (shopsError)
+    return <p className={style.stateMsg}>Error loading shops</p>;
 
   return (
-    <div>
-      <div>
-        <h1>Welcome, {user?.username}!</h1>
-        <p>Glad to see you again</p>
+    <div className={style.page}>
+
+      <div className={style.header}>
+        <h1 className={style.headerTitle}>Welcome, {user?.username}!</h1>
+        <p className={style.headerSub}>Glad to see you again</p>
       </div>
 
-      <div>
-        <div>
-          <div>
-            <Package />
+      <div className={style.stats}>
+        <div className={style.statCard}>
+          <div className={style.statIcon}>
+            <Package size={20} />
           </div>
-          <div>
-            <p>Total products</p>
-            <h3>{products?.length || 0}</h3>
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <Store />
-          </div>
-          <div>
-            <p>Stores</p>
-            <h3>{shopsData?.shops?.length || 0}</h3>
+          <div className={style.statInfo}>
+            <p className={style.statLabel}>Total products</p>
+            <h3 className={style.statValue}>{products?.length || 0}</h3>
           </div>
         </div>
 
-        <div>
-          <div>
-            <ShoppingBag />
+        <div className={style.statCard}>
+          <div className={style.statIcon}>
+            <Store size={20} />
           </div>
-          <div>
-            <p>Orders</p>
-            <h3>{orderStats?.total || 0}</h3>
+          <div className={style.statInfo}>
+            <p className={style.statLabel}>Stores</p>
+            <h3 className={style.statValue}>{shopsData?.shops?.length || 0}</h3>
           </div>
         </div>
 
-        <div>
-          <div>
-            <TrendingUp />
+        <div className={style.statCard}>
+          <div className={style.statIcon}>
+            <ShoppingBag size={20} />
           </div>
-          <div>
-            <p>Revenue</p>
-            <h3>${orderStats?.totalRevenue?.toFixed(2) || "0.00"}</h3>
+          <div className={style.statInfo}>
+            <p className={style.statLabel}>Orders</p>
+            <h3 className={style.statValue}>{orderStats?.total || 0}</h3>
+          </div>
+        </div>
+
+        <div className={style.statCard}>
+          <div className={`${style.statIcon} ${style.statIconAccent}`}>
+            <TrendingUp size={20} />
+          </div>
+          <div className={style.statInfo}>
+            <p className={style.statLabel}>Revenue</p>
+            <h3 className={style.statValue}>
+              ${orderStats?.totalRevenue?.toFixed(2) || "0.00"}
+            </h3>
           </div>
         </div>
       </div>
 
-      <div>
-        <h2>Quick Actions</h2>
-        <div>
+      <div className={style.section}>
+        <h2 className={style.sectionTitle}>Quick Actions</h2>
+        <div className={style.actions}>
           {user?.role === "USER" && (
-            <Link href="/dashboard/owner-request">
-              <Users />
+            <Link href="/dashboard/owner-request" className={style.actionCard}>
+              <div className={style.actionIcon}>
+                <Users size={20} />
+              </div>
               <div>
-                <h3>Become an owner</h3>
-                <p>Apply to become a store owner</p>
+                <h3 className={style.actionTitle}>Become an owner</h3>
+                <p className={style.actionDesc}>Apply to become a store owner</p>
               </div>
             </Link>
           )}
 
           {(user?.role === "OWNER" || user?.role === "ADMIN") && (
-            <Link href="/dashboard/products/add">
-              <Package />
+            <Link href="/dashboard/products/add" className={style.actionCard}>
+              <div className={style.actionIcon}>
+                <Package size={20} />
+              </div>
               <div>
-                <h3>Add product</h3>
-                <p>Create a new product in the catalog</p>
+                <h3 className={style.actionTitle}>Add product</h3>
+                <p className={style.actionDesc}>Create a new product in the catalog</p>
               </div>
             </Link>
           )}
 
-          <Link href="/dashboard/products">
-            <Store />
+          <Link href="/dashboard/products" className={style.actionCard}>
+            <div className={style.actionIcon}>
+              <Store size={20} />
+            </div>
             <div>
-              <h3>View products</h3>
-              <p>View all available products</p>
+              <h3 className={style.actionTitle}>View products</h3>
+              <p className={style.actionDesc}>View all available products</p>
             </div>
           </Link>
 
-          <Link href="/dashboard/messages">
-            <MessageSquare />
+          <Link href="/dashboard/messages" className={style.actionCard}>
+            <div className={style.actionIcon}>
+              <MessageSquare size={20} />
+            </div>
             <div>
-              <h3>Messages</h3>
-              <p>Contact sellers</p>
+              <h3 className={style.actionTitle}>Messages</h3>
+              <p className={style.actionDesc}>Contact sellers</p>
             </div>
           </Link>
         </div>
       </div>
 
-      <div>
-        <div>
-          <h2>Latest products</h2>
-          <Link href="/dashboard/products">View all</Link>
+      <div className={style.section}>
+        <div className={style.sectionHeader}>
+          <h2 className={style.sectionTitle}>Latest products</h2>
+          <Link href="/dashboard/products" className={style.viewAll}>View all</Link>
         </div>
 
-        {productsLoading ? (
-          <div>
-            <p>Loading products...</p>
-          </div>
-        ) : (
-          <div>
-            {products && products.length > 0 ? (
-              products.map((product) => (
-                <Link
-                  key={product.id}
-                  href={`/dashboard/products/${product.slug}`}
-                >
-                  <div>
-                    {product.imageUrl ? (
-                      <img src={product.imageUrl} alt={product.name} />
-                    ) : (
-                      <div>
-                        <Package />
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <h3>{product.name}</h3>
-                    <p>{product.brand}</p>
-                    <div>
-                      <span>${product.price}</span>
-                      <span>{product.volume}ml</span>
+        <div className={style.products}>
+          {products && products.length > 0 ? (
+            products.map((product) => (
+              <Link
+                key={product.id}
+                href={`/dashboard/products/${product.slug}`}
+                className={style.productCard}
+              >
+                <div className={style.productImg}>
+                  {product.imageUrl ? (
+                    <img src={product.imageUrl} alt={product.name} />
+                  ) : (
+                    <div className={style.productImgPlaceholder}>
+                      <Package size={24} />
                     </div>
+                  )}
+                </div>
+                <div className={style.productInfo}>
+                  <h3 className={style.productName}>{product.name}</h3>
+                  <p className={style.productBrand}>{product.brand}</p>
+                  <div className={style.productMeta}>
+                    <span className={style.productPrice}>${product.price}</span>
+                    <span className={style.productVolume}>{product.volume}ml</span>
                   </div>
-                </Link>
-              ))
-            ) : (
-              <div>
-                <p>Товары не найдены</p>
-              </div>
-            )}
-          </div>
-        )}
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className={style.empty}>
+              <p>Products not found</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {shopsData?.shops && shopsData.shops.length > 0 && (
-        <div>
-          <div>
-            <h2>Popular stores</h2>
-            <Link href="/dashboard/shops">View all</Link>
+        <div className={style.section}>
+          <div className={style.sectionHeader}>
+            <h2 className={style.sectionTitle}>Popular stores</h2>
+            <Link href="/dashboard/shops" className={style.viewAll}>View all</Link>
           </div>
 
-          <div>
+          <div className={style.shops}>
             {shopsData.shops.map((shop) => (
-              <Link key={shop.id} href={`/dashboard/shops/${shop.slug}`}>
-                <div>
+              <Link
+                key={shop.id}
+                href={`/dashboard/shops/${shop.slug}`}
+                className={style.shopCard}
+              >
+                <div className={style.shopLogo}>
                   {shop.logoUrl ? (
                     <img src={shop.logoUrl} alt={shop.name} />
                   ) : (
-                    <Store />
+                    <Store size={22} />
                   )}
                 </div>
-                <div>
-                  <h3>{shop.name}</h3>
-                  {shop.description && <p>{shop.description}</p>}
-                  {shop.address && <p>{shop.address}</p>}
+                <div className={style.shopInfo}>
+                  <h3 className={style.shopName}>{shop.name}</h3>
+                  {shop.description && (
+                    <p className={style.shopDesc}>{shop.description}</p>
+                  )}
+                  {shop.address && (
+                    <p className={style.shopAddress}>{shop.address}</p>
+                  )}
                 </div>
               </Link>
             ))}
@@ -192,20 +206,23 @@ export default function DashboardPage() {
       )}
 
       {user?.role === "USER" && (
-        <div>
-          <div>
-            <Users />
+        <div className={style.ownerBanner}>
+          <div className={style.ownerBannerIcon}>
+            <Users size={24} />
           </div>
-          <div>
-            <h3>Do you want to sell products?</h3>
-            <p>
+          <div className={style.ownerBannerBody}>
+            <h3 className={style.ownerBannerTitle}>Do you want to sell products?</h3>
+            <p className={style.ownerBannerDesc}>
               Apply to become a store owner. Minimum requirements: 15 unique
               fragrances, 7 units of each.
             </p>
-            <Link href="/dashboard/owner-request">Apply now</Link>
+            <Link href="/dashboard/owner-request" className={style.ownerBannerBtn}>
+              Apply now
+            </Link>
           </div>
         </div>
       )}
+
     </div>
   );
 }

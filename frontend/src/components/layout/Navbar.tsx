@@ -3,15 +3,15 @@
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 import { useCartStore } from '@/store/cartStore';
-import { Bell, ShoppingCart, User, LogOut, ChevronDown, Menu } from 'lucide-react';
+import { Bell, ShoppingCart, User, LogOut, ChevronDown, Menu, X } from 'lucide-react';
 import { useAppNotifications } from '@/hooks/useNotification';
 import { useState, useRef, useEffect } from 'react';
 import style from './navbar.module.scss';
 
 interface NavbarProps {
-    sidebarOpen: boolean;
-    setSidebarOpen: (open: boolean) => void;
-  }
+  sidebarOpen: boolean;
+  setSidebarOpen: (val: boolean) => void;
+}
 
 export function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
   const { user, logout } = useAuth();
@@ -36,13 +36,13 @@ export function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
     <nav className={style.nav}>
       <div className={style.inner}>
 
-      <button
-          className={style.menuBtn}
+        <button
+          className={style.burger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle sidebar"
         >
-          <Menu size={20} />
+          {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
-
 
         <Link href="/dashboard" className={style.logo}>
           <span className={style.logoText}>ESSENCE</span>
@@ -79,11 +79,7 @@ export function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
               onClick={() => setDropdownOpen((v) => !v)}
             >
               {user?.avatar ? (
-                <img
-                  className={style.avatarImg}
-                  src={user.avatar}
-                  alt={user.username}
-                />
+                <img className={style.avatarImg} src={user.avatar} alt={user.username} />
               ) : (
                 <User size={18} />
               )}
@@ -103,40 +99,25 @@ export function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
 
                 <div className={style.dropdownDivider} />
 
-                <Link
-                  href="/dashboard/profile"
-                  className={style.dropdownItem}
-                  onClick={() => setDropdownOpen(false)}
-                >
-                  Профиль
+                <Link href="/dashboard/profile" className={style.dropdownItem} onClick={() => setDropdownOpen(false)}>
+                  Profile
                 </Link>
 
                 {user?.role === 'OWNER' && (
-                  <Link
-                    href="/dashboard/my-shop"
-                    className={style.dropdownItem}
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    Мой магазин
+                  <Link href="/dashboard/my-shop" className={style.dropdownItem} onClick={() => setDropdownOpen(false)}>
+                    My stores
                   </Link>
                 )}
 
                 {user?.role === 'ADMIN' && (
-                  <Link
-                    href="/dashboard/admin"
-                    className={style.dropdownItem}
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    Админ панель
+                  <Link href="/dashboard/admin" className={style.dropdownItem} onClick={() => setDropdownOpen(false)}>
+                    Admin panel
                   </Link>
                 )}
 
                 <div className={style.dropdownDivider} />
 
-                <button
-                  className={`${style.dropdownItem} ${style.dropdownLogout}`}
-                  onClick={logout}
-                >
+                <button className={`${style.dropdownItem} ${style.dropdownLogout}`} onClick={logout}>
                   <LogOut size={14} />
                   Exit
                 </button>
