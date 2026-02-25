@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+$active-bg    : rgba(123, 111, 212, 0.08);
+$active-color : $purple-start;
+
+.aside {
+  width: 240px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid $border;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Jost', sans-serif;
+  flex-shrink: 0;
+}
+
+.closed {
+    transform: translateX(-100%);
+  }
+  
+  .open {
+    transform: translateX(0);
+  }
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 12px;
+  flex: 1;
+}
+
+.section {
+  margin-bottom: 8px;
+}
+
+.sectionTitle {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $text-hint;
+  padding: 0 12px;
+  margin: 0 0 6px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: $text-muted;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: $input-bg;
+    color: $text-dark;
+  }
+}
+
+.linkActive {
+  background: $active-bg;
+  color: $active-color;
+  font-weight: 500;
+
+  .linkIcon {
+    color: $active-color;
+  }
+
+  &:hover {
+    background: $active-bg;
+    color: $active-color;
+  }
+}
+
+.linkIcon {
+  flex-shrink: 0;
+  color: inherit;
+  transition: color 0.15s;
+}
+
+.ownerBanner {
+  margin: 4px 0 12px;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba($purple-start, 0.07) 0%, rgba($purple-end, 0.07) 100%);
+  border: 1px dashed rgba($purple-start, 0.25);
+  border-radius: 14px;
+}
+
+.ownerBannerBtn {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.settingsWrap {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid $border;
+}

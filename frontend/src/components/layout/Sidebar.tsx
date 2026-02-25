@@ -13,44 +13,54 @@ import {
   Users,
   Settings,
 } from 'lucide-react';
+import style from './sidebar.module.scss';
 
-export function Sidebar() {
+
+interface SidebarProps {
+    open: boolean; 
+  }
+
+export function Sidebar({open}:SidebarProps) {
   const pathname = usePathname();
   const { user } = useAuth();
 
   const isActive = (path: string) => pathname === path;
 
   const userLinks = [
-    { href: '/dashboard', label: 'Главная', icon: Home },
-    { href: '/dashboard/products', label: 'Товары', icon: Package },
-    { href: '/dashboard/shops', label: 'Магазины', icon: Store },
-    { href: '/dashboard/messages', label: 'Сообщения', icon: MessageSquare },
-    { href: '/dashboard/orders', label: 'Заказы', icon: ShoppingBag },
+    { href: '/dashboard', label: 'Main', icon: Home },
+    { href: '/dashboard/products', label: 'Products', icon: Package },
+    { href: '/dashboard/shops', label: 'Stores', icon: Store },
+    { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
+    { href: '/dashboard/orders', label: 'Orders', icon: ShoppingBag },
   ];
 
   const ownerLinks = [
-    { href: '/dashboard/my-products', label: 'Мои товары', icon: Package },
-    { href: '/dashboard/my-shop', label: 'Мой магазин', icon: Store },
-    { href: '/dashboard/my-orders', label: 'Заказы товаров', icon: ShoppingBag },
+    { href: '/dashboard/my-products', label: 'My products', icon: Package },
+    { href: '/dashboard/my-shop', label: 'My stores', icon: Store },
+    { href: '/dashboard/my-orders', label: 'Product orders', icon: ShoppingBag },
   ];
 
   const adminLinks = [
-    { href: '/dashboard/admin/requests', label: 'Заявки', icon: FileText },
-    { href: '/dashboard/admin/users', label: 'Пользователи', icon: Users },
+    { href: '/dashboard/admin/requests', label: 'Requests', icon: FileText },
+    { href: '/dashboard/admin/users', label: 'Users', icon: Users },
   ];
 
   return (
-    <aside>
-      <nav>
-        <div>
-          <p>Основное</p>
-          <ul>
+    <aside className={`${style.aside} ${open ? style.open : style.closed}`}>
+      <nav className={style.nav}>
+
+        <div className={style.section}>
+          <p className={style.sectionTitle}>Basics</p>
+          <ul className={style.list}>
             {userLinks.map((link) => {
               const Icon = link.icon;
               return (
                 <li key={link.href}>
-                  <Link href={link.href}>
-                    <Icon />
+                  <Link
+                    href={link.href}
+                    className={`${style.link} ${isActive(link.href) ? style.linkActive : ''}`}
+                  >
+                    <Icon size={18} className={style.linkIcon} />
                     <span>{link.label}</span>
                   </Link>
                 </li>
@@ -60,23 +70,26 @@ export function Sidebar() {
         </div>
 
         {user?.role === 'USER' && (
-          <div>
-            <Link href="/dashboard/owner-request">
-              Стать владельцем
+          <div className={style.ownerBanner}>
+            <Link href="/dashboard/owner-request" className={style.ownerBannerBtn}>
+              Become an owner
             </Link>
           </div>
         )}
 
         {(user?.role === 'OWNER' || user?.role === 'ADMIN') && (
-          <div>
-            <p>Владелец</p>
-            <ul>
+          <div className={style.section}>
+            <p className={style.sectionTitle}>Владелец</p>
+            <ul className={style.list}>
               {ownerLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <li key={link.href}>
-                    <Link href={link.href}>
-                      <Icon />
+                    <Link
+                      href={link.href}
+                      className={`${style.link} ${isActive(link.href) ? style.linkActive : ''}`}
+                    >
+                      <Icon size={18} className={style.linkIcon} />
                       <span>{link.label}</span>
                     </Link>
                   </li>
@@ -87,15 +100,18 @@ export function Sidebar() {
         )}
 
         {user?.role === 'ADMIN' && (
-          <div>
-            <p>Администратор</p>
-            <ul>
+          <div className={style.section}>
+            <p className={style.sectionTitle}>Admin</p>
+            <ul className={style.list}>
               {adminLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <li key={link.href}>
-                    <Link href={link.href}>
-                      <Icon />
+                    <Link
+                      href={link.href}
+                      className={`${style.link} ${isActive(link.href) ? style.linkActive : ''}`}
+                    >
+                      <Icon size={18} className={style.linkIcon} />
                       <span>{link.label}</span>
                     </Link>
                   </li>
@@ -105,12 +121,16 @@ export function Sidebar() {
           </div>
         )}
 
-        <div>
-          <Link href="/dashboard/settings">
-            <Settings />
-            <span>Настройки</span>
+        <div className={style.settingsWrap}>
+          <Link
+            href="/dashboard/settings"
+            className={`${style.link} ${isActive('/dashboard/settings') ? style.linkActive : ''}`}
+          >
+            <Settings size={18} className={style.linkIcon} />
+            <span>Settings</span>
           </Link>
         </div>
+
       </nav>
     </aside>
   );

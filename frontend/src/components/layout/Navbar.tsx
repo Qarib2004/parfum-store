@@ -3,12 +3,17 @@
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 import { useCartStore } from '@/store/cartStore';
-import { Bell, ShoppingCart, User, LogOut, ChevronDown } from 'lucide-react';
+import { Bell, ShoppingCart, User, LogOut, ChevronDown, Menu } from 'lucide-react';
 import { useAppNotifications } from '@/hooks/useNotification';
 import { useState, useRef, useEffect } from 'react';
 import style from './navbar.module.scss';
 
-export function Navbar() {
+interface NavbarProps {
+    sidebarOpen: boolean;
+    setSidebarOpen: (open: boolean) => void;
+  }
+
+export function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
   const { user, logout } = useAuth();
   const { unreadCount } = useAppNotifications();
   const { getTotalItems } = useCartStore();
@@ -30,6 +35,14 @@ export function Navbar() {
   return (
     <nav className={style.nav}>
       <div className={style.inner}>
+
+      <button
+          className={style.menuBtn}
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <Menu size={20} />
+        </button>
+
 
         <Link href="/dashboard" className={style.logo}>
           <span className={style.logoText}>ESSENCE</span>

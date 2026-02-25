@@ -1,59 +1,46 @@
-'use client';
+"use client";
 
-import { useAuth } from '@/hooks/useAuth';
-import { useQuery } from '@tanstack/react-query';
-import { orderApi, shopApi } from '@/lib/api/endpoints';
-import Link from 'next/link';
-import { 
-  Package, 
-  Store, 
-  ShoppingBag, 
+import { useAuth } from "@/hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { orderApi, shopApi } from "@/lib/api/endpoints";
+import Link from "next/link";
+import {
+  Package,
+  Store,
+  ShoppingBag,
   TrendingUp,
   Users,
-  MessageSquare 
-} from 'lucide-react';
-import { useProduct, useProducts } from '@/hooks/useProduct';
+  MessageSquare,
+} from "lucide-react";
+import { useProduct, useProducts } from "@/hooks/useProduct";
+import style from "./page.module.scss";
+import { useShops } from "@/hooks/useShops";
+import { useOrderStats } from "@/hooks/useOrderStats";
 
 export default function DashboardPage() {
   const { user } = useAuth();
 
-  // Получаем последние продукты
   const { products, isLoading: productsLoading } = useProducts({ limit: 6 });
+  const { shopsData, isLoading: shopsLoading, error: shopsError } = useShops(3);
+  const { orderStats, isLoading: statsLoading } = useOrderStats(!!user);
 
-  // Получаем статистику заказов
-  const { data: orderStats } = useQuery({
-    queryKey: ['orderStats'],
-    queryFn: async () => {
-      const response = await orderApi.getOrderStats();
-      return response.data.data;
-    },
-    enabled: !!user,
-  });
-
-  // Получаем магазины (первые 3)
-  const { data: shopsData } = useQuery({
-    queryKey: ['shops', { limit: 3 }],
-    queryFn: async () => {
-      const response = await shopApi.getAllShops({ limit: 3 });
-      return response.data.data;
-    },
-  });
+  if (productsLoading || shopsLoading || statsLoading) return <p>Loading...</p>;
+  if (shopsError) return <p>Error loading shops</p>;
 
   return (
     <div>
       <div>
-        <h1>Добро пожаловать, {user?.username}!</h1>
-        <p>Рады видеть вас снова</p>
+        <h1>Welcome, {user?.username}!</h1>
+        <p>Glad to see you again</p>
       </div>
 
-      {/* Статистические карточки */}
       <div>
         <div>
           <div>
             <Package />
           </div>
           <div>
-            <p>Всего товаров</p>
+            <p>Total products</p>
             <h3>{products?.length || 0}</h3>
           </div>
         </div>
@@ -63,7 +50,7 @@ export default function DashboardPage() {
             <Store />
           </div>
           <div>
-            <p>Магазины</p>
+            <p>Stores</p>
             <h3>{shopsData?.shops?.length || 0}</h3>
           </div>
         </div>
@@ -73,7 +60,7 @@ export default function DashboardPage() {
             <ShoppingBag />
           </div>
           <div>
-            <p>Заказы</p>
+            <p>Orders</p>
             <h3>{orderStats?.total || 0}</h3>
           </div>
         </div>
@@ -83,32 +70,31 @@ export default function DashboardPage() {
             <TrendingUp />
           </div>
           <div>
-            <p>Выручка</p>
-            <h3>${orderStats?.totalRevenue?.toFixed(2) || '0.00'}</h3>
+            <p>Revenue</p>
+            <h3>${orderStats?.totalRevenue?.toFixed(2) || "0.00"}</h3>
           </div>
         </div>
       </div>
 
-      {/* Быстрые действия */}
       <div>
-        <h2>Быстрые действия</h2>
+        <h2>Quick Actions</h2>
         <div>
-          {user?.role === 'USER' && (
+          {user?.role === "USER" && (
             <Link href="/dashboard/owner-request">
               <Users />
               <div>
-                <h3>Стать владельцем</h3>
-                <p>Подать заявку на статус владельца магазина</p>
+                <h3>Become an owner</h3>
+                <p>Apply to become a store owner</p>
               </div>
             </Link>
           )}
 
-          {(user?.role === 'OWNER' || user?.role === 'ADMIN') && (
+          {(user?.role === "OWNER" || user?.role === "ADMIN") && (
             <Link href="/dashboard/products/add">
               <Package />
               <div>
-                <h3>Добавить товар</h3>
-                <p>Создать новый товар в каталоге</p>
+                <h3>Add product</h3>
+                <p>Create a new product in the catalog</p>
               </div>
             </Link>
           )}
@@ -116,48 +102,42 @@ export default function DashboardPage() {
           <Link href="/dashboard/products">
             <Store />
             <div>
-              <h3>Просмотреть товары</h3>
-              <p>Посмотреть все доступные товары</p>
+              <h3>View products</h3>
+              <p>View all available products</p>
             </div>
           </Link>
 
           <Link href="/dashboard/messages">
             <MessageSquare />
             <div>
-              <h3>Сообщения</h3>
-              <p>Связаться с продавцами</p>
+              <h3>Messages</h3>
+              <p>Contact sellers</p>
             </div>
           </Link>
         </div>
       </div>
 
-      {/* Последние товары */}
       <div>
         <div>
-          <h2>Последние товары</h2>
-          <Link href="/dashboard/products">
-            Посмотреть все
-          </Link>
+          <h2>Latest products</h2>
+          <Link href="/dashboard/products">View all</Link>
         </div>
 
         {productsLoading ? (
           <div>
-            <p>Загрузка товаров...</p>
+            <p>Loading products...</p>
           </div>
         ) : (
           <div>
             {products && products.length > 0 ? (
               products.map((product) => (
-                <Link 
-                  key={product.id} 
+                <Link
+                  key={product.id}
                   href={`/dashboard/products/${product.slug}`}
                 >
                   <div>
                     {product.imageUrl ? (
-                      <img 
-                        src={product.imageUrl} 
-                        alt={product.name}
-                      />
+                      <img src={product.imageUrl} alt={product.name} />
                     ) : (
                       <div>
                         <Package />
@@ -183,40 +163,27 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* Популярные магазины */}
       {shopsData?.shops && shopsData.shops.length > 0 && (
         <div>
           <div>
-            <h2>Популярные магазины</h2>
-            <Link href="/dashboard/shops">
-              Посмотреть все
-            </Link>
+            <h2>Popular stores</h2>
+            <Link href="/dashboard/shops">View all</Link>
           </div>
 
           <div>
             {shopsData.shops.map((shop) => (
-              <Link 
-                key={shop.id} 
-                href={`/dashboard/shops/${shop.slug}`}
-              >
+              <Link key={shop.id} href={`/dashboard/shops/${shop.slug}`}>
                 <div>
                   {shop.logoUrl ? (
-                    <img 
-                      src={shop.logoUrl} 
-                      alt={shop.name}
-                    />
+                    <img src={shop.logoUrl} alt={shop.name} />
                   ) : (
                     <Store />
                   )}
                 </div>
                 <div>
                   <h3>{shop.name}</h3>
-                  {shop.description && (
-                    <p>{shop.description}</p>
-                  )}
-                  {shop.address && (
-                    <p>{shop.address}</p>
-                  )}
+                  {shop.description && <p>{shop.description}</p>}
+                  {shop.address && <p>{shop.address}</p>}
                 </div>
               </Link>
             ))}
@@ -224,18 +191,18 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Статус заявки для USER */}
-      {user?.role === 'USER' && (
+      {user?.role === "USER" && (
         <div>
           <div>
             <Users />
           </div>
           <div>
-            <h3>Хотите продавать товары?</h3>
-            <p>Подайте заявку на статус владельца магазина. Минимальные требования: 15 уникальных ароматов по 7 штук каждого.</p>
-            <Link href="/dashboard/owner-request">
-              Подать заявку
-            </Link>
+            <h3>Do you want to sell products?</h3>
+            <p>
+              Apply to become a store owner. Minimum requirements: 15 unique
+              fragrances, 7 units of each.
+            </p>
+            <Link href="/dashboard/owner-request">Apply now</Link>
           </div>
         </div>
       )}

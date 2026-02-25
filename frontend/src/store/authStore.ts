@@ -1,16 +1,18 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { User } from "@/types";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { User } from '@/types';
 
 interface AuthState {
   user: User | null;
   accessToken: string | null;
   refreshToken: string | null;
   isAuthenticated: boolean;
+  isHydrated: boolean;
   setAuth: (user: User, accessToken: string, refreshToken: string) => void;
   updateUser: (user: Partial<User>) => void;
   logout: () => void;
   clearAuth: () => void;
+  setHydrated: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -20,13 +22,14 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       isAuthenticated: false,
+      isHydrated: false,
 
       setAuth: (user, accessToken, refreshToken) => {
-        if (typeof window !== "undefined") {
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
         }
-
+        
         set({
           user,
           accessToken,
@@ -35,15 +38,15 @@ export const useAuthStore = create<AuthState>()(
         });
       },
 
-      updateUser: (updateUser) =>
+      updateUser: (updatedUser) =>
         set((state) => ({
-          user: state.user ? { ...state.user, ...updateUser } : null,
+          user: state.user ? { ...state.user, ...updatedUser } : null,
         })),
 
       logout: () => {
-        if (typeof window !== "undefined") {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
         }
 
         set({
@@ -55,9 +58,9 @@ export const useAuthStore = create<AuthState>()(
       },
 
       clearAuth: () => {
-        if (typeof window !== "undefined") {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
         }
 
         set({
@@ -67,15 +70,27 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: false,
         });
       },
+
+      setHydrated: () => {
+        set({ isHydrated: true });
+      },
     }),
     {
-      name: "auth-storage",
-      partialize: (state) => ({
-        user: state.user,
-        isAuthenticated: state.isAuthenticated,
-        accessToken: state.accessToken,
-        refreshToken: state.refreshToken,
-      }),
+      name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        if (typeof window !== 'undefined') {
+          const accessToken = localStorage.getItem('accessToken');
+          const refreshToken = localStorage.getItem('refreshToken');
+          
+          if (accessToken && refreshToken && state) {
+            state.accessToken = accessToken;
+            state.refreshToken = refreshToken;
+            state.isAuthenticated = true;
+          }
+          
+          state?.setHydrated();
+        }
+      },
     }
   )
 );

@@ -1,27 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
-import { authApi } from "@/lib/api/endpoints";
-import { LoginInput, RegisterInput } from "@/schemas/auth.schema";
-import { toast } from "sonner";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
+import { authApi } from '@/lib/api/endpoints';
+import { LoginInput, RegisterInput } from '@/schemas/auth.schema';
+import { useEffect, useState } from 'react';
 
 export const useAuth = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const {
-    user,
-    isAuthenticated,
-    setAuth,
-    logout: logoutStore,
-  } = useAuthStore();
+  const { user, isAuthenticated, setAuth, logout: logoutStore } = useAuthStore();
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token && !isAuthenticated) {
+      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+    }
+    setIsInitialized(true);
+  }, []);
 
   const { data: currentUser, isLoading } = useQuery({
-    queryKey: ["currentUser"],
+    queryKey: ['currentUser'],
     queryFn: async () => {
       const response = await authApi.getUserCurrent();
       return response.data.data;
     },
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !!localStorage.getItem('accessToken'),
     retry: false,
   });
 
@@ -30,9 +34,8 @@ export const useAuth = () => {
     onSuccess: (response) => {
       const { user, accessToken, refreshToken } = response.data.data!;
       setAuth(user, accessToken, refreshToken);
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      toast.success("Account created success");
-      router.push("/dashboard");
+      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      router.push('/dashboard');
     },
   });
 
@@ -41,14 +44,8 @@ export const useAuth = () => {
     onSuccess: (response) => {
       const { user, accessToken, refreshToken } = response.data.data!;
       setAuth(user, accessToken, refreshToken);
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      toast.success(`Welcome,  ${user.username}`);
-      router.push("/dashboard");
-    },
-    onError: () => {
-      logoutStore();
-      queryClient.clear();
-      router.push("/login");
+      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      router.push('/dashboard');
     },
   });
 
@@ -57,7 +54,12 @@ export const useAuth = () => {
     onSuccess: () => {
       logoutStore();
       queryClient.clear();
-      router.push("/login");
+      router.push('/login');
+    },
+    onError: () => {
+      logoutStore();
+      queryClient.clear();
+      router.push('/login');
     },
   });
 
@@ -68,14 +70,14 @@ export const useAuth = () => {
     } else {
       logoutStore();
       queryClient.clear();
-      router.push("/login");
+      router.push('/login');
     }
   };
 
   return {
     user: currentUser || user,
-    isAuthenticated,
-    isLoading,
+    isAuthenticated: isAuthenticated && !!localStorage.getItem('accessToken'),
+    isLoading: !isInitialized || isLoading,
     register: registerMutation.mutate,
     login: loginMutation.mutate,
     logout,

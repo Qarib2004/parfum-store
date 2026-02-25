@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Sidebar } from '@/components/layout/Sidebar';
 
@@ -13,14 +13,9 @@ export default function DashboardLayout({
 }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-
-
-  
+  const [sidebarOpen, setSidebarOpen] = useState(false); // состояние Sidebar
 
   useEffect(() => {
-
-
-
     if (!isLoading && !isAuthenticated) {
       router.push('/login');
     }
@@ -39,13 +34,13 @@ export default function DashboardLayout({
   }
 
   return (
-    <div>
-      <Navbar />
-      <div>
-        <Sidebar />
-        <main>
-          {children}
-        </main>
+    <div className="dashboard-layout">
+      <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+      <div className="dashboard-main" style={{ display: 'flex' }}>
+        <Sidebar open={sidebarOpen} />
+
+        <main style={{ flex: 1, padding: '1rem' }}>{children}</main>
       </div>
     </div>
   );
