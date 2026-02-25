@@ -13,71 +13,69 @@ interface AuthState {
   clearAuth: () => void;
 }
 
-
-
 export const useAuthStore = create<AuthState>()(
-    persist(
-        (set) => ({
-            user:null,
-            accessToken:null,
-            refreshToken:null,
-            isAuthenticated:false,
+  persist(
+    (set) => ({
+      user: null,
+      accessToken: null,
+      refreshToken: null,
+      isAuthenticated: false,
 
-            setAuth:(user,accessToken,refreshToken) => {
-                if(typeof window !== 'undefined'){
-                    localStorage.setItem('accessToken',accessToken);
-                    localStorage.setItem('refreshToken',refreshToken)
-                }
+      setAuth: (user, accessToken, refreshToken) => {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+        }
 
-                set({
-                    user,
-                    accessToken,
-                    refreshToken,
-                    isAuthenticated:true
-                })
-            },
+        set({
+          user,
+          accessToken,
+          refreshToken,
+          isAuthenticated: true,
+        });
+      },
 
-            updateUser:(updateUser) => 
-                set((state) => ({
-                    user:state.user ? {...state.user,...updateUser}:null
-                })),
+      updateUser: (updateUser) =>
+        set((state) => ({
+          user: state.user ? { ...state.user, ...updateUser } : null,
+        })),
 
+      logout: () => {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+        }
 
+        set({
+          user: null,
+          accessToken: null,
+          refreshToken: null,
+          isAuthenticated: false,
+        });
+      },
 
-                logout: () => {
-                    if (typeof window !== 'undefined') {
-                      localStorage.removeItem('accessToken');
-                      localStorage.removeItem('refreshToken');
-                    }
-            
-                    set({
-                      user: null,
-                      accessToken: null,
-                      refreshToken: null,
-                      isAuthenticated: false,
-                    });
-                  },
-            
-                  clearAuth: () => {
-                    if (typeof window !== 'undefined') {
-                      localStorage.removeItem('accessToken');
-                      localStorage.removeItem('refreshToken');
-                    }
-            
-                    set({
-                      user: null,
-                      accessToken: null,
-                      refreshToken: null,
-                      isAuthenticated: false,
-                    });
-                  },
-                }),
-                {
-                  name: 'auth-storage',
-                  partialize: (state) => ({
-                    user: state.user,
-                    isAuthenticated: state.isAuthenticated,
-                  }),
-                }
-              )
-)
+      clearAuth: () => {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+        }
+
+        set({
+          user: null,
+          accessToken: null,
+          refreshToken: null,
+          isAuthenticated: false,
+        });
+      },
+    }),
+    {
+      name: "auth-storage",
+      partialize: (state) => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+      }),
+    }
+  )
+);

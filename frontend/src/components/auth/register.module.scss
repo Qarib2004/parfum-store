@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$bg-start     : #dce3ed;
+$bg-mid       : #e8ecf3;
+$bg-end       : #d4dbe8;
+$input-bg     : #f4f6fa;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-label   : #3d4257;
+$text-hint    : #9ba3b4;
+$text-footer  : #6b7280;
+$focus-ring   : #8b7dd8;
+$error-text   : #e05555;
+
+.bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $bg-start 0%, $bg-mid 50%, $bg-end 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Jost', sans-serif;
+  padding: 24px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 48px 40px 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 20px 60px rgba(90, 80, 160, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  font-family: 'Jost', sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: 0.18em;
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 4px;
+}
+
+.tagline {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: $text-hint;
+  font-weight: 400;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 28px;
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: $text-dark;
+    margin: 0 0 8px;
+    letter-spacing: 0.01em;
+  }
+
+  p {
+    font-size: 14px;
+    color: $text-muted;
+    margin: 0;
+    font-weight: 300;
+  }
+}
+
+.error {
+  background: #fff0f0;
+  border: 1px solid #ffd0d0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+
+  p {
+    color: #c0392b;
+    font-size: 13px;
+    margin: 0;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: $text-label;
+    letter-spacing: 0.02em;
+  }
+
+  input {
+    background: $input-bg;
+    border: 1.5px solid transparent;
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 14px;
+    font-family: 'Jost', sans-serif;
+    color: $text-dark;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+
+    &::placeholder {
+      color: #b0b8cc;
+    }
+
+    &:focus {
+      border-color: $focus-ring;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(139, 125, 216, 0.12);
+    }
+  }
+}
+
+.fieldError {
+  font-size: 12px;
+  color: $error-text;
+  margin: 0;
+}
+
+.fieldHint {
+  font-size: 12px;
+  color: $text-hint;
+  margin: 0;
+  font-weight: 300;
+}
+
+.btn {
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-top: 4px;
+  box-shadow: 0 4px 20px rgba(123, 111, 212, 0.35);
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(123, 111, 212, 0.45);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.footer {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 14px;
+  color: $text-footer;
+
+  a {
+    color: $purple-start;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

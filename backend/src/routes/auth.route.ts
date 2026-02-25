@@ -8,7 +8,7 @@ const router = Router();
 
 router.post(
   '/register',
-  authLimiter,
+  // authLimiter,
   validateBody(registerSchema),
   asyncHandler(authController.register)
 );
@@ -16,7 +16,7 @@ router.post(
 
 router.post(
   '/login',
-  authLimiter,
+  // authLimiter,
   validateBody(loginSchema),
   asyncHandler(authController.login)
 );

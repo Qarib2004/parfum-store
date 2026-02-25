@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+
+// ── Variables ──────────────────────────────────────────────
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$focus-ring   : #8b7dd8;
+$border       : #eaedf4;
+
+// ── Nav bar ───────────────────────────────────────────────
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid $border;
+  box-shadow: 0 2px 16px rgba(90, 80, 160, 0.06);
+  font-family: 'Jost', sans-serif;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+// ── Logo ──────────────────────────────────────────────────
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.logoText {
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logoSub {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: $text-hint;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+// ── Search ────────────────────────────────────────────────
+.searchWrap {
+  flex: 1;
+  max-width: 480px;
+}
+
+.search {
+  width: 100%;
+  box-sizing: border-box;
+  background: $input-bg;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-family: 'Jost', sans-serif;
+  color: $text-dark;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+
+  &::placeholder {
+    color: #b0b8cc;
+  }
+
+  &:focus {
+    border-color: $focus-ring;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(139, 125, 216, 0.12);
+  }
+}
+
+// ── Actions group ─────────────────────────────────────────
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+// ── Icon button (bell / cart) ─────────────────────────────
+.iconBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: $text-muted;
+  text-decoration: none;
+  transition: background 0.18s, color 0.18s;
+
+  &:hover {
+    background: $input-bg;
+    color: $purple-start;
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, $purple-start, $purple-end);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(123, 111, 212, 0.4);
+  pointer-events: none;
+}
+
+// ── Profile ───────────────────────────────────────────────
+.profileWrap {
+  position: relative;
+}
+
+.avatarBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: $input-bg;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 6px 10px 6px 8px;
+  cursor: pointer;
+  color: $text-muted;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+
+  &:hover {
+    border-color: rgba($purple-start, 0.3);
+    background: #fff;
+    color: $purple-start;
+  }
+}
+
+.avatarImg {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chevron {
+  transition: transform 0.2s;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+// ── Dropdown ──────────────────────────────────────────────
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid $border;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 16px 40px rgba(90, 80, 160, 0.1);
+  padding: 8px;
+  animation: dropdownIn 0.18s ease;
+  z-index: 200;
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownInfo {
+  padding: 10px 12px 12px;
+}
+
+.dropdownName {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 2px;
+}
+
+.dropdownEmail {
+  font-size: 12px;
+  color: $text-muted;
+  margin: 0 0 8px;
+  font-weight: 300;
+}
+
+.dropdownRole {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, $purple-start, $purple-end);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 2px 0;
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: $border;
+  margin: 4px 0;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  color: $text-dark;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  box-sizing: border-box;
+
+  &:hover {
+    background: $input-bg;
+    color: $purple-start;
+  }
+}
+
+.dropdownLogout {
+  color: #e05555;
+
+  &:hover {
+    background: #fff0f0;
+    color: #c0392b;
+  }
+}
