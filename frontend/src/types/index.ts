@@ -31,6 +31,7 @@ export interface Product {
     id: string;
     username: string;
     avatar?: string;
+    shop:Shop
   };
   createdAt: string;
   updatedAt: string;
