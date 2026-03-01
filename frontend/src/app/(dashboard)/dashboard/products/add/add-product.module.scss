@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+
+$bp-sm : 480px;
+
+.page {
+  padding: 32px 36px;
+  max-width: 800px;
+  font-family: 'Jost', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  @media (max-width: $bp-sm) { padding: 16px 12px; gap: 20px; }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $border;
+}
+
+.headerTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+  letter-spacing: 0.01em;
+
+  @media (max-width: $bp-sm) { font-size: 26px; }
+}
+
+.headerSub {
+  font-size: 14px;
+  font-weight: 300;
+  color: $text-muted;
+  margin: 0;
+}
+
+.denied {
+  padding: 60px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Jost', sans-serif;
+}
+
+.deniedText {
+  font-size: 15px;
+  color: $text-hint;
+  margin: 0;
+  padding: 20px 28px;
+  background: $input-bg;
+  border-radius: 14px;
+  border: 1px solid $border;
+}

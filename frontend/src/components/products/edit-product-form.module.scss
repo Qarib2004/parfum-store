@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+$card-bg      : #ffffff;
+$focus-ring   : #8b7dd8;
+
+$bp-md : 768px;
+$bp-sm : 480px;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'Jost', sans-serif;
+  max-width: 760px;
+}
+
+.errorBanner {
+  background: #fff0f0;
+  border: 1px solid #ffd0d0;
+  border-radius: 12px;
+  padding: 12px 16px;
+
+  p { color: #c0392b; font-size: 13px; margin: 0; }
+}
+
+.imageSection {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: stretch;
+
+  @media (max-width: $bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.previewWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.previewImg {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid $border;
+  display: block;
+
+  @media (max-width: $bp-sm) { width: 120px; height: 120px; }
+}
+
+.noImage {
+  width: 140px;
+  height: 140px;
+  border-radius: 14px;
+  border: 1px dashed $border;
+  background: $input-bg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: $text-hint;
+
+  p { font-size: 12px; margin: 0; }
+
+  @media (max-width: $bp-sm) { width: 120px; height: 120px; }
+}
+
+.removeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 8px;
+  background: #fff0f0;
+  border: 1px solid #ffd0d0;
+  color: #c0392b;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+
+  &:hover { background: #ffe4e4; }
+}
+
+.uploadZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px dashed $border;
+  border-radius: 14px;
+  padding: 24px 20px;
+  cursor: pointer;
+  background: $input-bg;
+  min-height: 100px;
+  transition: border-color 0.18s, background 0.18s;
+
+  &:hover {
+    border-color: rgba($purple-start, 0.4);
+    background: rgba($purple-start, 0.03);
+
+    .uploadIcon { color: $purple-start; }
+  }
+}
+
+.uploadInput { display: none; }
+
+.uploadIcon {
+  color: $text-hint;
+  transition: color 0.18s;
+}
+
+.uploadText {
+  font-size: 13px;
+  font-weight: 500;
+  color: $text-muted;
+  margin: 0;
+}
+
+.uploadHint {
+  font-size: 11px;
+  color: $text-hint;
+  font-weight: 300;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @media (max-width: $bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.colSpan2 {
+  grid-column: span 2;
+  @media (max-width: $bp-sm) { grid-column: span 1; }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-hint;
+}
+
+%input-base {
+  background: $input-bg;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: 'Jost', sans-serif;
+  color: $text-dark;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+
+  &::placeholder { color: #b0b8cc; }
+
+  &:focus {
+    border-color: $focus-ring;
+    background: $card-bg;
+    box-shadow: 0 0 0 3px rgba(139, 125, 216, 0.12);
+  }
+}
+
+.input    { @extend %input-base; }
+.select   { @extend %input-base; cursor: pointer; }
+.textarea { @extend %input-base; resize: vertical; min-height: 100px; line-height: 1.6; }
+
+.fieldError {
+  font-size: 12px;
+  color: #e05555;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 4px;
+
+  @media (max-width: $bp-sm) {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+}
+
+.cancelBtn {
+  flex: 1;
+  padding: 13px;
+  border-radius: 13px;
+  background: $card-bg;
+  border: 1.5px solid $border;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  color: $text-muted;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+
+  &:hover { border-color: rgba($purple-start, 0.3); color: $text-dark; }
+
+  @media (max-width: $bp-sm) { width: 100%; }
+}
+
+.submitBtn {
+  flex: 2;
+  padding: 13px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(123, 111, 212, 0.35);
+  transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(123, 111, 212, 0.45);
+  }
+
+  &:active:not(:disabled) { transform: translateY(0); }
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  @media (max-width: $bp-sm) { width: 100%; }
+}

@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+
+$bp-sm : 480px;
+
+.page {
+  padding: 32px 36px;
+  max-width: 800px;
+  font-family: 'Jost', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (max-width: $bp-sm) { padding: 16px 12px; gap: 18px; }
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: $text-muted;
+  text-decoration: none;
+  transition: color 0.15s;
+
+  &:hover { color: $purple-start; }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $border;
+}
+
+.headerTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+  letter-spacing: 0.01em;
+
+  @media (max-width: $bp-sm) { font-size: 26px; }
+}
+
+.headerSub {
+  font-size: 14px;
+  font-weight: 300;
+  color: $text-muted;
+  margin: 0;
+}
+
+.statePage {
+  padding: 60px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Jost', sans-serif;
+  text-align: center;
+
+  @media (max-width: $bp-sm) { padding: 40px 16px; }
+}
+
+.skeleton {
+  width: 100%;
+  max-width: 760px;
+  height: 520px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, $input-bg 25%, darken($input-bg, 3%) 50%, $input-bg 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.stateText {
+  font-size: 15px;
+  color: $text-hint;
+  margin: 0;
+  padding: 20px 28px;
+  background: $input-bg;
+  border-radius: 14px;
+  border: 1px solid $border;
+}
+
+.stateTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.stateLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: $purple-start;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
