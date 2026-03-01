@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+$card-bg      : #ffffff;
+$focus-ring   : #8b7dd8;
+
+$bp-md : 768px;
+$bp-sm : 480px;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'Jost', sans-serif;
+  max-width: 760px;
+}
+
+.errorBanner {
+  background: #fff0f0;
+  border: 1px solid #ffd0d0;
+  border-radius: 12px;
+  padding: 12px 16px;
+
+  p { color: #c0392b; font-size: 13px; margin: 0; }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+
+  @media (max-width: $bp-sm) { grid-template-columns: 1fr; gap: 10px; }
+}
+
+.statCard {
+  background: $card-bg;
+  border: 1.5px solid $border;
+  border-radius: 16px;
+  padding: 18px 20px;
+  transition: border-color 0.2s;
+}
+
+.statCardDone {
+  border-color: #a3e0bf;
+  background: #f4fdf8;
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $text-hint;
+  margin: 0 0 8px;
+}
+
+.statValue {
+  margin: 0;
+  line-height: 1;
+}
+
+.statNum {
+  font-size: 26px;
+  font-weight: 700;
+  color: $text-dark;
+}
+
+.statNumDone {
+  font-size: 26px;
+  font-weight: 700;
+  color: #2e8a57;
+}
+
+.statTotal {
+  font-size: 16px;
+  font-weight: 400;
+  color: $text-hint;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: $input-bg;
+  border: 1.5px solid $border;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  color: $text-muted;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: rgba($purple-start, 0.35);
+    color: $purple-start;
+    background: rgba($purple-start, 0.04);
+  }
+}
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.productRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 16px;
+  transition: border-color 0.15s;
+
+  &:hover { border-color: rgba($purple-start, 0.2); }
+
+  @media (max-width: $bp-sm) { flex-wrap: wrap; padding: 12px; }
+}
+
+.rowIndex {
+  font-size: 11px;
+  font-weight: 700;
+  color: $text-hint;
+  letter-spacing: 0.06em;
+  padding-top: 32px; 
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+
+  @media (max-width: $bp-sm) { padding-top: 0; width: auto; }
+}
+
+.rowFields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  min-width: 0;
+
+  @media (max-width: $bp-md) { grid-template-columns: 1fr 1fr; }
+  @media (max-width: $bp-sm) { grid-template-columns: 1fr; }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-hint;
+}
+
+.input {
+  background: $input-bg;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: 'Jost', sans-serif;
+  color: $text-dark;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+
+  &::placeholder { color: #b0b8cc; }
+
+  &:focus {
+    border-color: $focus-ring;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(139, 125, 216, 0.12);
+  }
+}
+
+.inputQty { max-width: 110px; }
+
+.fieldError {
+  font-size: 11px;
+  color: #e05555;
+  margin: 0;
+}
+
+.removeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: $input-bg;
+  border: 1px solid $border;
+  color: $text-hint;
+  cursor: pointer;
+  margin-top: 22px; 
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: #fff0f0;
+    color: #c0392b;
+    border-color: #ffd0d0;
+  }
+
+  @media (max-width: $bp-sm) { margin-top: 0; }
+}
+
+.submitBtn {
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, $purple-start 0%, $purple-end 100%);
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(123, 111, 212, 0.35);
+  transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(123, 111, 212, 0.45);
+  }
+
+  &:active:not(:disabled) { transform: translateY(0); }
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.info {
+  background: rgba($purple-start, 0.04);
+  border: 1px dashed rgba($purple-start, 0.22);
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.infoHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $purple-start;
+}
+
+.infoTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.infoList {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    font-size: 13px;
+    color: $text-muted;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+}
