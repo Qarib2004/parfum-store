@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { messageApi } from "@/lib/api/endpoints";
 import { useMessageStore } from "@/store/messageStore";
@@ -37,7 +37,11 @@ export const useConversationMessages = (otherUserId?: string) => {
     queryFn: async () => {
       if (!otherUserId) return [] as Message[];
       const response = await messageApi.getMessageHistory(otherUserId);
-      return response.data.data as Message[];
+      const result = response.data.data as unknown as {
+        messages: Message[];
+        pagination: { page: number; limit: number; hasMore: boolean };
+      };
+      return result.messages;
     },
     enabled: !!otherUserId,
   });
@@ -58,11 +62,20 @@ export const useConversationMessages = (otherUserId?: string) => {
     },
   });
 
+  const { mutate: markConversationAsReadMutate } =
+    markConversationAsReadMutation;
+
+  const markConversationAsRead = useCallback(
+    (userId: string) => {
+      markConversationAsReadMutate(userId);
+    },
+    [markConversationAsReadMutate],
+  );
+
   return {
     messages: currentMessages,
     isLoading,
     error,
-    markConversationAsRead: (userId: string) =>
-      markConversationAsReadMutation.mutate(userId),
+    markConversationAsRead,
   };
 };

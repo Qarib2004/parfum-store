@@ -180,7 +180,7 @@ export default function DashboardPage() {
             {shopsData.shops.map((shop) => (
               <Link
                 key={shop.id}
-                href={`/dashboard/shops/${shop.slug}`}
+                href={`/dashboard/shops/${shop.id}`}
                 className={style.shopCard}
               >
                 <div className={style.shopLogo}>
