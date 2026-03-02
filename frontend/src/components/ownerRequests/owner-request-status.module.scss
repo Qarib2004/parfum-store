@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+$card-bg      : #ffffff;
+
+$bp-sm : 480px;
+
+.card {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 20px;
+  overflow: hidden;
+  font-family: 'Jost', sans-serif;
+  max-width: 600px;
+  box-shadow: 0 4px 20px rgba(90, 80, 160, 0.06);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba($purple-start, 0.06) 0%, rgba($purple-end, 0.06) 100%);
+  border-bottom: 1px solid $border;
+
+  @media (max-width: $bp-sm) { padding: 16px; gap: 12px; }
+}
+
+.headerIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, $purple-start, $purple-end);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(123, 111, 212, 0.3);
+}
+
+.headerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 3px;
+}
+
+.headerSub {
+  font-size: 12px;
+  color: $text-hint;
+  font-weight: 300;
+  margin: 0;
+}
+
+.body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: $bp-sm) { padding: 16px; gap: 16px; }
+}
+
+.infoBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: $input-bg;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.infoIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $purple-start;
+  flex-shrink: 0;
+}
+
+.infoContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.infoTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.infoRows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.infoLabel {
+  font-size: 13px;
+  color: $text-hint;
+  font-weight: 300;
+}
+
+.infoValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+}
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listTitle {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $text-hint;
+  margin: 0;
+}
+
+.listItems {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: $input-bg;
+  border-radius: 12px;
+  transition: background 0.15s;
+
+  &:hover { background: darken($input-bg, 2%); }
+}
+
+.listIndex {
+  font-size: 11px;
+  font-weight: 700;
+  color: $text-hint;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.listMeta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.listName {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listBrand {
+  font-size: 12px;
+  color: $text-hint;
+  font-weight: 300;
+  margin: 0;
+}
+
+.listQty {
+  font-size: 12px;
+  font-weight: 500;
+  color: $text-muted;
+  background: #fff;
+  border: 1px solid $border;
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.footer {
+  padding: 16px 24px;
+  border-top: 1px solid $border;
+  background: $input-bg;
+
+  @media (max-width: $bp-sm) { padding: 14px 16px; }
+}
+
+.footerText {
+  font-size: 13px;
+  color: $text-muted;
+  font-weight: 300;
+  margin: 0;
+  line-height: 1.6;
+  text-align: center;
+}
