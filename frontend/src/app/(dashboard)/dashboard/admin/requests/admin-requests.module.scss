@@ -1,0 +1,507 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end   : #9b5fc0;
+$text-dark    : #1a1d2e;
+$text-muted   : #5a6275;
+$text-hint    : #9ba3b4;
+$input-bg     : #f4f6fa;
+$border       : #eaedf4;
+$card-bg      : #ffffff;
+
+$bp-md : 900px;
+$bp-sm : 600px;
+
+.page {
+  padding: 32px 36px;
+  font-family: 'Jost', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: $bp-sm) { padding: 16px 12px; gap: 16px; }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.headerTitle {
+  font-size: 28px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.headerSub {
+  font-size: 14px;
+  color: $text-muted;
+  margin: 0;
+  font-weight: 300;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.filterGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: $card-bg;
+  border: 1px solid $border;
+}
+
+.filterIcon {
+  color: $text-hint;
+}
+
+.filterSelect {
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-family: 'Jost', sans-serif;
+  color: $text-dark;
+  outline: none;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: 18px;
+
+  @media (max-width: $bp_md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.listCol {
+  background: $card-bg;
+  border-radius: 18px;
+  border: 1px solid $border;
+  box-shadow: 0 2px 12px rgba(90, 80, 160, 0.05);
+  overflow: hidden;
+}
+
+.detailCol {
+  background: $card-bg;
+  border-radius: 18px;
+  border: 1px solid $border;
+  box-shadow: 0 2px 12px rgba(90, 80, 160, 0.05);
+  min-height: 280px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid $border;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba($purple-start, 0.03);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.listItemActive {
+  background: rgba($purple-start, 0.04);
+}
+
+.listStatusIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: $input-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $purple-start;
+  flex-shrink: 0;
+}
+
+.listContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.listTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.listUser {
+  font-size: 13px;
+  font-weight: 500;
+  color: $text-dark;
+  margin: 0;
+}
+
+.listEmail {
+  font-size: 12px;
+  color: $text-hint;
+  margin-left: 4px;
+}
+
+.listStatus {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.listStatusPending {
+  background: #fff6e5;
+  color: #9a6d1b;
+}
+
+.listStatusApproved {
+  background: #e7f7ed;
+  color: #2e8a57;
+}
+
+.listStatusRejected {
+  background: #ffe9e9;
+  color: #c0392b;
+}
+
+.listMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: $text-hint;
+}
+
+.detailCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.detailHeader {
+  padding: 16px 18px;
+  border-bottom: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.detailUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detailAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: $input-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: $purple-start;
+}
+
+.detailName {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.detailEmail {
+  font-size: 12px;
+  color: $text-hint;
+  margin: 0;
+}
+
+.detailStats {
+  display: flex;
+  gap: 12px;
+}
+
+.detailStat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.detailStatLabel {
+  font-size: 11px;
+  color: $text-hint;
+}
+
+.detailStatValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+}
+
+.detailBody {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 4px;
+}
+
+.products {
+  border-radius: 14px;
+  border: 1px solid $border;
+  background: $input-bg;
+  padding: 10px 10px 8px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.productRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px;
+}
+
+.productIndex {
+  width: 20px;
+  text-align: center;
+  font-size: 11px;
+  color: $text-hint;
+}
+
+.productMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.productName {
+  font-size: 13px;
+  font-weight: 500;
+  color: $text-dark;
+  margin: 0;
+}
+
+.productBrand {
+  font-size: 12px;
+  color: $text-hint;
+  margin: 0;
+}
+
+.productQty {
+  font-size: 12px;
+  color: $text-muted;
+  font-weight: 500;
+}
+
+.decisionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.decisionButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.decisionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid $border;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: $text-muted;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.decisionBtnActiveApproved {
+  background: #e7f7ed;
+  border-color: #c5e6d1;
+  color: #2e8a57;
+}
+
+.decisionBtnActiveRejected {
+  background: #ffe9e9;
+  border-color: #ffbcbc;
+  color: #c0392b;
+}
+
+.commentLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: $text-muted;
+}
+
+.commentInput {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid $border;
+  background: #fff;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: 'Jost', sans-serif;
+  resize: vertical;
+  min-height: 70px;
+  outline: none;
+
+  &:focus {
+    border-color: rgba($purple-start, 0.5);
+    box-shadow: 0 0 0 3px rgba(139, 125, 216, 0.08);
+  }
+}
+
+.submitBtn {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, $purple-start, $purple-end);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(123, 111, 212, 0.28);
+  transition: opacity 0.15s, transform 0.12s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.placeholder {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.placeholderIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: $input-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-hint;
+}
+
+.placeholderTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.placeholderDesc {
+  font-size: 13px;
+  color: $text-hint;
+  margin: 0;
+}
+
+.empty {
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 4px;
+}
+
+.emptyDesc {
+  font-size: 13px;
+  color: $text-hint;
+  margin: 0;
+}
+
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeletonItem {
+  height: 56px;
+  background: linear-gradient(90deg, $input-bg 25%, darken($input-bg, 3%) 50%, $input-bg 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.statePage {
+  padding: 60px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Jost', sans-serif;
+}
+
+.stateTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0;
+}
+
+.stateDesc {
+  font-size: 14px;
+  color: $text-muted;
+  margin: 0;
+}
+

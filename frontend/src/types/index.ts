@@ -1,4 +1,4 @@
-export type UserRole = 'USER' | 'OWNER' | 'ADMIN';
+export type UserRole = "USER" | "OWNER" | "ADMIN";
 
 export interface User {
   id: string;
@@ -31,7 +31,7 @@ export interface Product {
     id: string;
     username: string;
     avatar?: string;
-    shop:Shop
+    shop: Shop;
   };
   createdAt: string;
   updatedAt: string;
@@ -66,7 +66,12 @@ export interface Conversation {
   unreadCount: number;
 }
 
-export type AppNotificationType = 'MESSAGE' | 'ORDER' | 'REQUEST_STATUS' | 'PRODUCT_UPDATE' | 'SYSTEM';
+export type AppNotificationType =
+  | "MESSAGE"
+  | "ORDER"
+  | "REQUEST_STATUS"
+  | "PRODUCT_UPDATE"
+  | "SYSTEM";
 
 export interface AppNotification {
   id: string;
@@ -76,11 +81,11 @@ export interface AppNotification {
   message: string;
   read: boolean;
   link?: string;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
   createdAt: string;
 }
 
-export type OrderStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'CANCELLED';
+export type OrderStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "CANCELLED";
 
 export interface OrderItem {
   id: string;
@@ -103,7 +108,7 @@ export interface Order {
   updatedAt: string;
 }
 
-export type RequestStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
+export type RequestStatus = "PENDING" | "APPROVED" | "REJECTED";
 
 export interface ProductDetail {
   name: string;
@@ -133,7 +138,7 @@ export interface Pagination {
   totalPages: number;
 }
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message?: string;
   data?: T;

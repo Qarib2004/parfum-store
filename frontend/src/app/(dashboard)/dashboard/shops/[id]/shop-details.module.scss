@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500;600&display=swap');
+
+$purple-start : #7b6fd4;
+$purple-end : #9b5fc0;
+$text-dark : #1a1d2e;
+$text-muted : #5a6275;
+$text-hint : #9ba3b4;
+$input-bg : #f4f6fa;
+$border : #eaedf4;
+$card-bg : #ffffff;
+
+$bp-md : 768px;
+$bp-sm : 480px;
+
+.page {
+  padding: 32px 36px;
+  max-width: 1100px;
+  font-family: 'Jost', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  @media (max-width: $bp-md) {
+    padding: 24px 20px;
+    gap: 18px;
+  }
+
+  @media (max-width: $bp-sm) {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: $text-muted;
+  text-decoration: none;
+
+  &:hover {
+    color: $purple-start;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.headerMain {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logoWrap {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  background: $input-bg;
+  border: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logoPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-hint;
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 4px;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: $text-muted;
+  margin: 0 0 2px;
+}
+
+.meta {
+  font-size: 12px;
+  color: $text-hint;
+  margin: 0;
+}
+
+.about {
+  background: $card-bg;
+  border-radius: 18px;
+  border: 1px solid $border;
+  padding: 16px 18px;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 6px;
+}
+
+.aboutText {
+  font-size: 14px;
+  color: $text-muted;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.productsSection {
+  background: $card-bg;
+  border-radius: 20px;
+  border: 1px solid $border;
+  padding: 18px 20px 20px;
+  box-shadow: 0 4px 16px rgba(90, 80, 160, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.productsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.productsMeta {
+  font-size: 13px;
+  color: $text-hint;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: $bp-sm) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.empty {
+  padding: 28px 16px;
+  text-align: center;
+  background: $input-bg;
+  border-radius: 16px;
+}
+
+.emptyTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 4px;
+}
+
+.emptyDesc {
+  font-size: 13px;
+  color: $text-muted;
+  margin: 0;
+}
+
+.statePage {
+  padding: 60px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Jost', sans-serif;
+}
+
+.stateTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 6px;
+}
+
+.stateLink {
+  font-size: 14px;
+  color: $purple-start;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.skeleton {
+  width: 100%;
+  max-width: 640px;
+  height: 140px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, $input-bg 25%, darken($input-bg, 3%) 50%, $input-bg 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

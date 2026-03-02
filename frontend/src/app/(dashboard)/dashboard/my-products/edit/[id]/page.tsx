@@ -39,7 +39,7 @@ export default function EditProductPage({
     return (
       <div className={style.statePage}>
         <p className={style.stateText}>
-          You don't have permission to edit products
+          You do not have permission to edit products
         </p>
       </div>
     );
@@ -68,7 +68,7 @@ export default function EditProductPage({
     return (
       <div className={style.statePage}>
         <h2 className={style.stateTitle}>
-          You don't have permission to edit this product
+          You do not have permission to edit this product
         </h2>
         <Link href="/dashboard/my-products" className={style.stateLink}>
           Back to my products

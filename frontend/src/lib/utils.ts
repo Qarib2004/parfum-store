@@ -1,76 +1,76 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import { format, formatDistanceToNow } from 'date-fns';
-import { ru } from 'date-fns/locale';
-
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { format, formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-
-export function formatDate(date: string | Date, formatStr: string = 'dd.MM.yyyy HH:mm') {
+export function formatDate(
+  date: string | Date,
+  formatStr: string = "dd.MM.yyyy HH:mm",
+) {
   return format(new Date(date), formatStr, { locale: ru });
 }
-
 
 export function formatRelativeDate(date: string | Date) {
   return formatDistanceToNow(new Date(date), { addSuffix: true, locale: ru });
 }
 
-
-export function formatPrice(price: number, currency: string = 'USD') {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
+export function formatPrice(price: number, currency: string = "USD") {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
     currency,
   }).format(price);
 }
 
-
 export function formatNumber(num: number) {
-  return new Intl.NumberFormat('ru-RU').format(num);
+  return new Intl.NumberFormat("ru-RU").format(num);
 }
-
 
 export function truncate(str: string, length: number = 100) {
   if (str.length <= length) return str;
-  return str.slice(0, length) + '...';
+  return str.slice(0, length) + "...";
 }
-
 
 export function getInitials(name: string) {
   return name
-    .split(' ')
+    .split(" ")
     .map((n) => n[0])
-    .join('')
+    .join("")
     .toUpperCase()
     .slice(0, 2);
 }
-
 
 export function isValidEmail(email: string) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
+export function getErrorMessage(error: unknown): string {
+  const err = error as {
+    response?: {
+      data?: { message?: string; errors?: Array<{ message: string }> };
+    };
+    message?: string;
+  };
 
-export function getErrorMessage(error: any): string {
-  if (error?.response?.data?.message) {
-    return error.response.data.message;
+  if (err?.response?.data?.message) {
+    return err.response.data.message;
   }
-  if (error?.response?.data?.errors?.length > 0) {
-    return error.response.data.errors.map((e: any) => e.message).join(', ');
+  if (err?.response?.data?.errors && err.response.data.errors.length > 0) {
+    return err.response.data.errors.map((e) => e.message).join(", ");
   }
-  if (error?.message) {
-    return error.message;
+  if (err?.message) {
+    return err.message;
   }
-  return 'Presented error';
+  return "Presented error";
 }
 
-
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
@@ -79,27 +79,24 @@ export function debounce<T extends (...args: any[]) => any>(
   };
 }
 
-
 export function hasRole(userRole: string, allowedRoles: string[]) {
   return allowedRoles.includes(userRole);
 }
-
 
 export async function copyToClipboard(text: string) {
   if (navigator.clipboard) {
     await navigator.clipboard.writeText(text);
   } else {
-    const textArea = document.createElement('textarea');
+    const textArea = document.createElement("textarea");
     textArea.value = text;
     document.body.appendChild(textArea);
     textArea.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     document.body.removeChild(textArea);
   }
 }
 
-
-export function generateId(prefix: string = 'id') {
+export function generateId(prefix: string = "id") {
   return `${prefix}_${Math.random().toString(36).substr(2, 9)}`;
 }
 
@@ -112,17 +109,14 @@ export function fileToBase64(file: File): Promise<string> {
   });
 }
 
-
 export function isFileSizeValid(file: File, maxSizeMB: number = 5) {
   const maxSizeBytes = maxSizeMB * 1024 * 1024;
   return file.size <= maxSizeBytes;
 }
 
-
 export function isImageFile(file: File) {
-  return file.type.startsWith('image/');
+  return file.type.startsWith("image/");
 }
-
 
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));

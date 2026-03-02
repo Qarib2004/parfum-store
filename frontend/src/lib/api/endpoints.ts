@@ -1,4 +1,20 @@
-import { ApiResponse, AppNotification, AuthResponse, Order, OwnerRequest, Product, Shop, User } from "@/types";
+import {
+  ApiResponse,
+  AppNotification,
+  AuthResponse,
+  Conversation,
+  Message,
+  Order,
+  OwnerRequest,
+  Pagination,
+  Product,
+  Shop,
+  User,
+} from "@/types";
+import {
+  CreateProductInput,
+  UpdateProductInput,
+} from "@/schemas/product.schema";
 import axiosInstance from "./axios";
 
 //auth
@@ -15,11 +31,10 @@ export const authApi = {
   refreshToken: (refreshToken: string) =>
     axiosInstance.post<ApiResponse<{ user: User; accessToken: string }>>(
       "/auth/refresh",
-      { refreshToken }
+      { refreshToken },
     ),
 
-  getUserCurrent: () => 
-    axiosInstance.get<ApiResponse<User>>("/auth/me")
+  getUserCurrent: () => axiosInstance.get<ApiResponse<User>>("/auth/me"),
 };
 
 //user
@@ -58,10 +73,9 @@ export const productApi = {
     maxPrice?: number;
     ownerId?: string;
   }) =>
-    axiosInstance.get<ApiResponse<{ products: Product[]; pagination: any }>>(
-      "/products",
-      { params }
-    ),
+    axiosInstance.get<
+      ApiResponse<{ products: Product[]; pagination: Pagination }>
+    >("/products", { params }),
 
   getProductById: (id: string) =>
     axiosInstance.get<ApiResponse<Product>>(`/products/${id}`),
@@ -69,10 +83,10 @@ export const productApi = {
   getProductBySlug: (slug: string) =>
     axiosInstance.get<ApiResponse<Product>>(`/products/slug/${slug}`),
 
-  createProduct: (data: any) =>
+  createProduct: (data: CreateProductInput) =>
     axiosInstance.post<ApiResponse<Product>>("/products", data),
 
-  createProductWithImage: (data: any, file: File) => {
+  createProductWithImage: (data: CreateProductInput, file: File) => {
     const formData = new FormData();
     Object.keys(data).forEach((key) => formData.append(key, data[key]));
     formData.append("image", file);
@@ -81,11 +95,11 @@ export const productApi = {
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
-      }
+      },
     );
   },
 
-  updateProduct: (id: string, data: any) =>
+  updateProduct: (id: string, data: UpdateProductInput) =>
     axiosInstance.put<ApiResponse<Product>>(`/products/${id}`, data),
 
   updateProductImage: (id: string, file: File) => {
@@ -96,7 +110,7 @@ export const productApi = {
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
-      }
+      },
     );
   },
 
@@ -107,16 +121,23 @@ export const productApi = {
     axiosInstance.get<ApiResponse<Product[]>>("/products/my/products"),
 
   getOwnerProductsStats: () =>
-    axiosInstance.get<ApiResponse<any>>("/products/my/stats"),
+    axiosInstance.get<
+      ApiResponse<{
+        totalProducts: number;
+        totalQuantity: number;
+        averagePrice: number;
+        uniqueBrands: number;
+      }>
+    >("/products/my/stats"),
 };
 
 //shop
 
 export const shopApi = {
   getAllShops: (params?: { page?: number; limit?: number; search?: string }) =>
-    axiosInstance.get<ApiResponse<{ shops: Shop[]; pagination: any }>>(
+    axiosInstance.get<ApiResponse<{ shops: Shop[]; pagination: Pagination }>>(
       "/shops",
-      { params }
+      { params },
     ),
 
   getShopById: (id: string) =>
@@ -133,8 +154,10 @@ export const shopApi = {
     address?: string;
   }) => axiosInstance.post<ApiResponse<Shop>>("/shops", data),
 
-  updateShop: (id: string, data: any) =>
-    axiosInstance.put<ApiResponse<Shop>>(`/shops/${id}`, data),
+  updateShop: (
+    id: string,
+    data: { name?: string; description?: string; address?: string },
+  ) => axiosInstance.put<ApiResponse<Shop>>(`/shops/${id}`, data),
 
   updateShopLogo: (id: string, file: File) => {
     const formData = new FormData();
@@ -150,19 +173,17 @@ export const shopApi = {
   deleteShop: (id: string) => axiosInstance.delete<ApiResponse>(`/shops/${id}`),
 
   getShopProducts: (id: string, params?: { page?: number; limit?: number }) =>
-    axiosInstance.get<ApiResponse<{ products: Product[]; pagination: any }>>(
-      `/shops/${id}/products`,
-      { params }
-    ),
+    axiosInstance.get<
+      ApiResponse<{ products: Product[]; pagination: Pagination }>
+    >(`/shops/${id}/products`, { params }),
 
   getShopProductsBySlug: (
     slug: string,
-    params?: { page?: number; limit?: number }
+    params?: { page?: number; limit?: number },
   ) =>
-    axiosInstance.get<ApiResponse<{ products: Product[]; pagination: any }>>(
-      `/shops/slug/${slug}/products`,
-      { params }
-    ),
+    axiosInstance.get<
+      ApiResponse<{ products: Product[]; pagination: Pagination }>
+    >(`/shops/slug/${slug}/products`, { params }),
 };
 
 //notifications
@@ -172,7 +193,7 @@ export const appNotificationApi = {
       ApiResponse<{
         notifications: AppNotification[];
         unreadCount: number;
-        pagination: any;
+        pagination: Pagination;
       }>
     >("/notifications", { params }),
 
@@ -181,7 +202,7 @@ export const appNotificationApi = {
 
   getUnreadCount: () =>
     axiosInstance.get<ApiResponse<{ count: number }>>(
-      "/notifications/unread-count"
+      "/notifications/unread-count",
     ),
 
   markAsRead: (id: string) =>
@@ -200,18 +221,18 @@ export const appNotificationApi = {
 //orders
 export const orderApi = {
   getUserOrders: (params?: { page?: number; limit?: number }) =>
-    axiosInstance.get<ApiResponse<{ orders: Order[]; pagination: any }>>(
+    axiosInstance.get<ApiResponse<{ orders: Order[]; pagination: Pagination }>>(
       "/orders/my",
-      { params }
+      { params },
     ),
 
   getOrderById: (id: string) =>
     axiosInstance.get<ApiResponse<Order>>(`/orders/${id}`),
 
   getOwnerOrders: (params?: { page?: number; limit?: number }) =>
-    axiosInstance.get<ApiResponse<{ orders: Order[]; pagination: any }>>(
+    axiosInstance.get<ApiResponse<{ orders: Order[]; pagination: Pagination }>>(
       "/orders/owner",
-      { params }
+      { params },
     ),
 
   updateOrderStatus: (id: string, status: string) =>
@@ -223,37 +244,81 @@ export const orderApi = {
   getOrderStats: () => axiosInstance.get<ApiResponse<any>>("/orders/stats"),
 };
 
-
-
-
 //owner request
 export const ownerRequestApi = {
-    createOwnerRequest: (data: { products: Array<{ name: string; brand: string; quantity: number }> }) =>
-      axiosInstance.post<ApiResponse<OwnerRequest>>('/owner-requests', data),
-    
-    getUserOwnerRequests: () =>
-      axiosInstance.get<ApiResponse<OwnerRequest[]>>('/owner-requests/my'),
-    
-    getOwnerRequestById: (id: string) =>
-      axiosInstance.get<ApiResponse<OwnerRequest>>(`/owner-requests/${id}`),
-    
-    getAllOwnerRequests: (params?: { page?: number; limit?: number; status?: string }) =>
-      axiosInstance.get<ApiResponse<{ requests: OwnerRequest[]; pagination: any }>>('/owner-requests', { params }),
-    
-    reviewOwnerRequest: (data: { requestId: string; status: 'APPROVED' | 'REJECTED'; adminComment?: string }) =>
-      axiosInstance.put<ApiResponse<OwnerRequest>>(`/owner-requests/${data.requestId}/review`, data),
-    
-    deleteOwnerRequest: (id: string) =>
-      axiosInstance.delete<ApiResponse>(`/owner-requests/${id}`),
-  };
+  createOwnerRequest: (data: {
+    products: Array<{ name: string; brand: string; quantity: number }>;
+  }) => axiosInstance.post<ApiResponse<OwnerRequest>>("/owner-requests", data),
 
+  getUserOwnerRequests: () =>
+    axiosInstance.get<ApiResponse<OwnerRequest[]>>("/owner-requests/my"),
 
+  getOwnerRequestById: (id: string) =>
+    axiosInstance.get<ApiResponse<OwnerRequest>>(`/owner-requests/${id}`),
 
-  //stripe
-  export const stripeApi = {
-    createCheckoutSession: (items: Array<{ productId: string; quantity: number }>) =>
-      axiosInstance.post<ApiResponse<{ sessionId: string; sessionUrl: string; order: Order }>>('/stripe/create-checkout-session', { items }),
-    
-    checkPaymentStatus: (sessionId: string) =>
-      axiosInstance.get<ApiResponse<any>>(`/stripe/payment-status/${sessionId}`),
-  };
+  getAllOwnerRequests: (params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+  }) =>
+    axiosInstance.get<
+      ApiResponse<{ requests: OwnerRequest[]; pagination: Pagination }>
+    >("/owner-requests", { params }),
+
+  reviewOwnerRequest: (data: {
+    requestId: string;
+    status: "APPROVED" | "REJECTED";
+    adminComment?: string;
+  }) =>
+    axiosInstance.put<ApiResponse<OwnerRequest>>(
+      `/owner-requests/${data.requestId}/review`,
+      data,
+    ),
+
+  deleteOwnerRequest: (id: string) =>
+    axiosInstance.delete<ApiResponse>(`/owner-requests/${id}`),
+};
+
+//stripe
+export const stripeApi = {
+  createCheckoutSession: (
+    items: Array<{ productId: string; quantity: number }>,
+  ) =>
+    axiosInstance.post<
+      ApiResponse<{ sessionId: string; sessionUrl: string; order: Order }>
+    >("/stripe/create-checkout-session", { items }),
+
+  checkPaymentStatus: (sessionId: string) =>
+    axiosInstance.get<ApiResponse<{ status: string; order?: Order }>>(
+      `/stripe/payment-status/${sessionId}`,
+    ),
+};
+
+//messages
+export const messageApi = {
+  sendMessage: (data: { receiverId: string; content: string }) =>
+    axiosInstance.post<ApiResponse<Message>>("/messages", data),
+
+  getConversations: () =>
+    axiosInstance.get<ApiResponse<Conversation[]>>("/messages/conversations"),
+
+  getUnreadCount: () =>
+    axiosInstance.get<ApiResponse<{ count: number }>>("/messages/unread-count"),
+
+  getMessageHistory: (otherUserId: string) =>
+    axiosInstance.get<ApiResponse<Message[]>>(`/messages/${otherUserId}`),
+
+  markMessageAsRead: (messageId: string) =>
+    axiosInstance.put<ApiResponse<Message>>(`/messages/${messageId}/read`),
+
+  markConversationAsRead: (otherUserId: string) =>
+    axiosInstance.put<ApiResponse<void>>(`/messages/${otherUserId}/read-all`),
+
+  deleteMessage: (messageId: string) =>
+    axiosInstance.delete<ApiResponse<void>>(`/messages/${messageId}`),
+
+  deleteConversation: (otherUserId: string) =>
+    axiosInstance.delete<ApiResponse<void>>(
+      `/messages/conversation/${otherUserId}`,
+    ),
+};

@@ -1,23 +1,24 @@
-'use client';
+"use client";
 
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import Link from 'next/link';
-import { Plus, Package, Edit, Trash2 } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
-import { useOwnerProducts } from '@/hooks/useProduct';
-import style from './my-products.module.scss';
-import { toast } from 'sonner';
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Link from "next/link";
+import { Plus, Package, Edit, Trash2 } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
+import { useOwnerProducts } from "@/hooks/useProduct";
+import style from "./my-products.module.scss";
+import { toast } from "sonner";
 
 export default function MyProductsPage() {
   const { user } = useAuth();
   const router = useRouter();
-  const { products, stats, isLoading, deleteProduct, isDeleting } = useOwnerProducts();
+  const { products, stats, isLoading, deleteProduct, isDeleting } =
+    useOwnerProducts();
 
   useEffect(() => {
-    if (user && user.role !== 'OWNER' && user.role !== 'ADMIN') {
-      router.push('/dashboard');
+    if (user && user.role !== "OWNER" && user.role !== "ADMIN") {
+      router.push("/dashboard");
     }
   }, [user, router]);
 
@@ -31,34 +32,32 @@ export default function MyProductsPage() {
             onSuccess: () => {
               toast.success("Product deleted successfully.");
             },
-            onError: (error: any) => {
+            onError: (error) => {
               toast.error("Failed to delete product.", {
                 description:
-                  error?.response?.data?.message || "Please try again later.",
+                  (error as { response?: { data?: { message?: string } } })
+                    ?.response?.data?.message || "Please try again later.",
               });
             },
           });
         },
       },
-      cancel: (
-        <button onClick={() => toast.dismiss()}>
-          Cancel
-        </button>
-      ),
+      cancel: <button onClick={() => toast.dismiss()}>Cancel</button>,
     });
   };
 
-  if (!user || (user.role !== 'OWNER' && user.role !== 'ADMIN')) {
+  if (!user || (user.role !== "OWNER" && user.role !== "ADMIN")) {
     return (
       <div className={style.denied}>
-        <p className={style.deniedText}>You don't have permission to view this page</p>
+        <p className={style.deniedText}>
+          You don't have permission to view this page
+        </p>
       </div>
     );
   }
 
   return (
     <div className={style.page}>
-
       <div className={style.header}>
         <div>
           <h1 className={style.headerTitle}>My products</h1>
@@ -82,7 +81,9 @@ export default function MyProductsPage() {
           </div>
           <div className={style.statCard}>
             <p className={style.statLabel}>Average price</p>
-            <h3 className={style.statValue}>{formatPrice(stats.averagePrice)}</h3>
+            <h3 className={style.statValue}>
+              {formatPrice(stats.averagePrice)}
+            </h3>
           </div>
           <div className={style.statCard}>
             <p className={style.statLabel}>Unique brands</p>
@@ -94,7 +95,9 @@ export default function MyProductsPage() {
       <div className={style.tableWrap}>
         {isLoading ? (
           <div className={style.skeletons}>
-            {[...Array(4)].map((_, i) => <div key={i} className={style.skeleton} />)}
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className={style.skeleton} />
+            ))}
           </div>
         ) : products && products.length > 0 ? (
           <table className={style.table}>
@@ -111,12 +114,15 @@ export default function MyProductsPage() {
             <tbody>
               {products.map((product) => (
                 <tr key={product.id} className={style.tr}>
-
                   <td className={style.td}>
                     <div className={style.productCell}>
                       <div className={style.productThumb}>
                         {product.imageUrl ? (
-                          <img className={style.productImg} src={product.imageUrl} alt={product.name} />
+                          <img
+                            className={style.productImg}
+                            src={product.imageUrl}
+                            alt={product.name}
+                          />
                         ) : (
                           <div className={style.productImgPlaceholder}>
                             <Package size={16} />
@@ -142,18 +148,26 @@ export default function MyProductsPage() {
                   </td>
 
                   <td className={style.td}>
-                    <span className={style.price}>{formatPrice(product.price)}</span>
+                    <span className={style.price}>
+                      {formatPrice(product.price)}
+                    </span>
                   </td>
 
                   <td className={style.td}>
-                    <span className={style.cellText}>{product.quantity} pcs</span>
+                    <span className={style.cellText}>
+                      {product.quantity} pcs
+                    </span>
                   </td>
 
                   <td className={style.td}>
                     {product.quantity > 0 ? (
-                      <span className={`${style.badge} ${style.badgeIn}`}>In stock</span>
+                      <span className={`${style.badge} ${style.badgeIn}`}>
+                        In stock
+                      </span>
                     ) : (
-                      <span className={`${style.badge} ${style.badgeOut}`}>Out of stock</span>
+                      <span className={`${style.badge} ${style.badgeOut}`}>
+                        Out of stock
+                      </span>
                     )}
                   </td>
 
@@ -168,7 +182,9 @@ export default function MyProductsPage() {
                       </Link>
                       <button
                         className={style.deleteBtn}
-                        onClick={() => handleDeleteProduct(product.id,product.brand)}
+                        onClick={() =>
+                          handleDeleteProduct(product.id, product.brand)
+                        }
                         disabled={isDeleting}
                         title="Delete"
                       >
@@ -176,7 +192,6 @@ export default function MyProductsPage() {
                       </button>
                     </div>
                   </td>
-
                 </tr>
               ))}
             </tbody>
@@ -187,7 +202,9 @@ export default function MyProductsPage() {
               <Package size={28} />
             </div>
             <h3 className={style.emptyTitle}>No products yet</h3>
-            <p className={style.emptyDesc}>Start by adding your first product</p>
+            <p className={style.emptyDesc}>
+              Start by adding your first product
+            </p>
             <Link href="/dashboard/products/add" className={style.addBtn}>
               <Plus size={16} />
               Add product
@@ -195,7 +212,6 @@ export default function MyProductsPage() {
           </div>
         )}
       </div>
-
     </div>
   );
 }
