@@ -1,24 +1,25 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
-import { useConversationMessages } from '@/hooks/useMessages';
-import { useSocket } from '@/hooks/useSocket';
-import { useMessageStore } from '@/store/messageStore';
-import { Message } from '@/types';
-import { ArrowLeft, Send, User } from 'lucide-react';
-import style from './conversation-page.module.scss';
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import { useConversationMessages } from "@/hooks/useMessages";
+import { useSocket } from "@/hooks/useSocket";
+import { useMessageStore } from "@/store/messageStore";
+import { Message } from "@/types";
+import { ArrowLeft, Send, User } from "lucide-react";
+import style from "./conversation-page.module.scss";
 
 export default function ConversationPage() {
   const params = useParams<{ userId: string }>();
   const otherUserId = params?.userId;
   const { user } = useAuth();
-  const { messages, isLoading, markConversationAsRead } = useConversationMessages(otherUserId);
-  const { typingUsers } = useMessageStore();
+  const { messages, isLoading, markConversationAsRead } =
+    useConversationMessages(otherUserId);
+  const { typingUsers, addMessage } = useMessageStore();
   const { sendMessage, startTyping, stopTyping } = useSocket();
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [lastTypedAt, setLastTypedAt] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,19 +62,36 @@ export default function ConversationPage() {
   if (!user) {
     return (
       <div className={style.statePage}>
-        <p className={style.stateText}>Please log in to view the conversation.</p>
+        <p className={style.stateText}>
+          Please log in to view the conversation.
+        </p>
       </div>
     );
   }
 
   const handleSend = () => {
     if (!content.trim() || !otherUserId) return;
+
+    const now = new Date().toISOString();
+    const optimisticMessage: Message = {
+      id: `temp_${now}`,
+      content: content.trim(),
+      senderId: user.id,
+      sender: user,
+      receiverId: otherUserId,
+      receiver: user, 
+      read: false,
+      createdAt: now,
+    };
+
+ 
+    addMessage(optimisticMessage);
     sendMessage(otherUserId, content.trim());
-    setContent('');
+    setContent("");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -102,7 +120,6 @@ export default function ConversationPage() {
 
   return (
     <div className={style.page}>
-
       <div className={style.header}>
         <Link href="/dashboard/messages" className={style.backLink}>
           <ArrowLeft size={16} />
@@ -119,7 +136,9 @@ export default function ConversationPage() {
             </div>
           ) : messages.length === 0 ? (
             <div className={style.empty}>
-              <p className={style.emptyText}>No messages yet. Start the conversation!</p>
+              <p className={style.emptyText}>
+                No messages yet. Start the conversation!
+              </p>
             </div>
           ) : (
             messages.map(renderMessage)
@@ -155,8 +174,6 @@ export default function ConversationPage() {
           </button>
         </div>
       </div>
-
     </div>
   );
 }
-
