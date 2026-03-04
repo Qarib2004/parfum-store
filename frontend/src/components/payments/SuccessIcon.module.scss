@@ -1,0 +1,41 @@
+.circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ecfdf5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  }
+  
+  .checkmark {
+    width: 44px;
+    height: 44px;
+    color: #10b981;
+  }
+  
+  .ring {
+    stroke-dasharray: 157;
+    stroke-dashoffset: 157;
+    animation: drawRing 0.5s ease 0.1s forwards;
+  }
+  
+  .check {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: drawCheck 0.35s ease 0.45s forwards;
+  }
+  
+  @keyframes pop {
+    from { transform: scale(0.6); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  
+  @keyframes drawRing {
+    to { stroke-dashoffset: 0; }
+  }
+  
+  @keyframes drawCheck {
+    to { stroke-dashoffset: 0; }
+  }

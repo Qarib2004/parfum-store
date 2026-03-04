@@ -1,0 +1,153 @@
+.card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #f4f4f5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    animation: fadeUp 0.4s ease 0.3s both;
+  }
+  
+  // ── Header ────────────────────────────────────────────────
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f4f4f5;
+  }
+  
+  .headerRight {
+    text-align: right;
+  }
+  
+  .label {
+    font-size: 11px;
+    color: #a1a1aa;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #18181b;
+    margin: 3px 0 0;
+  }
+  
+  // ── Items ─────────────────────────────────────────────────
+  
+  .items {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #f4f4f5;
+  
+    &:last-child { border-bottom: none; }
+  }
+  
+  .itemImage {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #f4f4f5;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  .itemInfo {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .itemName {
+    font-size: 13px;
+    font-weight: 500;
+    color: #18181b;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .itemQty {
+    font-size: 12px;
+    color: #a1a1aa;
+    margin: 2px 0 0;
+  }
+  
+  .itemPrice {
+    font-size: 13px;
+    font-weight: 600;
+    color: #18181b;
+    flex-shrink: 0;
+  }
+  
+  
+  .totals {
+    padding: 14px 20px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .totalLabel {
+    font-size: 13px;
+    color: #71717a;
+  }
+  
+  .totalValue {
+    font-size: 13px;
+    font-weight: 500;
+    color: #18181b;
+  
+    &.free { color: #10b981; font-weight: 600; }
+  }
+  
+  .divider {
+    height: 1px;
+    background: #e4e4e7;
+    margin: 4px 0;
+  }
+  
+  .grandLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #18181b;
+  }
+  
+  .grandValue {
+    font-size: 18px;
+    font-weight: 700;
+    color: #18181b;
+  }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }

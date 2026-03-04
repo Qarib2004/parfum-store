@@ -31,7 +31,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
     { href: "/dashboard/products", label: "Products", icon: Package },
     { href: "/dashboard/shops", label: "Stores", icon: Store },
     { href: "/dashboard/messages", label: "Messagets", icon: MessageSquare },
-    { href: "/dashboard/orders", label: "Orders", icon: ShoppingBag },
+    { href: "/dashboard/orders", label: "My orders", icon: ShoppingBag },
   ];
 
   const ownerLinks = [

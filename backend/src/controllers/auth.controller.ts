@@ -8,6 +8,7 @@ import * as authService from '../services/auth.service';
 
 
 
+
 export const register = async (req:Request,res:Response) => {
     const data:RegisterInput = req.body;
 
@@ -74,3 +75,27 @@ export const getCurrentUser = async (req:Request,res:Response) => {
       data: user,
     });
 }
+
+
+
+
+// export const changePasswordDirectly = async (userId: string, newPassword: string) => {
+//   const user = await prisma?.user.findUnique({
+//     where: { id: userId },
+//   });
+
+//   if (!user) {
+//     throw new AppError("User not found", 404);
+//   }
+
+//   const hashedPassword = await hashPassword(newPassword);
+
+//   await prisma?.user.update({
+//     where: { id: userId },
+//     data: {
+//       password: hashedPassword,
+//     },
+//   });
+
+//   return { message: "Password updated successfully" };
+// };

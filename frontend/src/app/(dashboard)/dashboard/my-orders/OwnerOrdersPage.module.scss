@@ -1,0 +1,214 @@
+
+.page {
+    min-height: 100vh;
+    background: #fafafa;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  
+    @media (min-width: 640px) {
+      padding: 40px 24px;
+    }
+  }
+  
+  
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #18181b;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #a1a1aa;
+    margin: 0;
+  }
+  
+  
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  
+  
+  .panel {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #f4f4f5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+  
+  
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid #f4f4f5;
+    overflow-x: auto;
+    scrollbar-width: none;
+  
+    &::-webkit-scrollbar { display: none; }
+  }
+  
+  .filterBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #71717a;
+    transition: background 0.12s ease, color 0.12s ease;
+  
+    &:hover { background: #f4f4f5; color: #18181b; }
+  }
+  
+  .filterBtnActive {
+    background: #18181b;
+    color: #fff;
+  
+    &:hover { background: #27272a; }
+  
+    .filterCount { color: #71717a; }
+  }
+  
+  .filterCount {
+    font-size: 11px;
+    color: #a1a1aa;
+  }
+  
+  
+  .errorBanner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #fef2f2;
+    border-bottom: 1px solid #fecaca;
+  
+    p {
+      font-size: 13px;
+      color: #ef4444;
+      margin: 0;
+    }
+  }
+  
+  .errorClose {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fca5a5;
+    font-size: 12px;
+    padding: 0;
+    margin-left: 12px;
+    transition: color 0.12s ease;
+  
+    &:hover { color: #ef4444; }
+  }
+  
+  
+  .colHeaders {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    gap: 16px;
+    padding: 10px 20px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #a1a1aa;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    border-bottom: 1px solid #fafafa;
+  }
+  
+  .colProducts {
+    width: 68px;
+  }
+  
+  .colDate {
+    @media (max-width: 767px) { display: none; }
+  }
+  
+  
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 64px 0;
+  }
+  
+  .emptyIcon {
+    font-size: 40px;
+    line-height: 1;
+  }
+  
+  .emptyText {
+    font-size: 14px;
+    color: #a1a1aa;
+    margin: 0;
+  }
+  
+  
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-top: 1px solid #f4f4f5;
+  }
+  
+  .paginationInfo {
+    font-size: 12px;
+    color: #a1a1aa;
+  }
+  
+  .paginationControls {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .pageBtn {
+    padding: 6px 14px;
+    font-size: 13px;
+    border: 1px solid #e4e4e7;
+    border-radius: 10px;
+    background: #fff;
+    color: #52525b;
+    cursor: pointer;
+    transition: background 0.12s ease;
+  
+    &:hover:not(:disabled) { background: #fafafa; }
+  
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }

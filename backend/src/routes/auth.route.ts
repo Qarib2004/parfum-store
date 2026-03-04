@@ -45,4 +45,18 @@ router.get(
   asyncHandler(authController.getCurrentUser)
 );
 
+// router.post(
+//   '/change-password',
+//   asyncHandler(async (req, res) => {
+//     const { userId, newPassword } = req.body;
+
+//     if (!userId || !newPassword) {
+//       return res.status(400).json({ message: 'userId and newPassword are required' });
+//     }
+
+//     const result = await authController.changePasswordDirectly(userId, newPassword);
+//     res.json(result);
+//   })
+// );
+
 export default router;

@@ -1,0 +1,147 @@
+.summary {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #f4f4f5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: 24px;
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #18181b;
+    margin: 0;
+  }
+  
+  
+  .lines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .lineLabel {
+    font-size: 13px;
+    color: #71717a;
+  }
+  
+  .lineValue {
+    font-size: 13px;
+    font-weight: 500;
+    color: #18181b;
+  
+    &.free {
+      color: #10b981;
+      font-weight: 600;
+    }
+  }
+  
+  
+  .shippingProgress {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .progressBar {
+    height: 4px;
+    background: #f4f4f5;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background: #18181b;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+  
+  .progressText {
+    font-size: 12px;
+    color: #a1a1aa;
+    margin: 0;
+  
+    strong { color: #18181b; }
+  }
+  
+  
+  .divider {
+    height: 1px;
+    background: #f4f4f5;
+  }
+  
+  
+  .totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .totalLabel {
+    font-size: 15px;
+    font-weight: 600;
+    color: #18181b;
+  }
+  
+  .totalValue {
+    font-size: 20px;
+    font-weight: 700;
+    color: #18181b;
+  }
+  
+  
+  .checkoutBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px;
+    background: #18181b;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease;
+  
+    &:hover:not(:disabled) { background: #27272a; }
+  
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+  
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  
+  .trust {
+    text-align: center;
+    font-size: 12px;
+    color: #a1a1aa;
+  }

@@ -1,0 +1,27 @@
+.card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #f4f4f5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: 16px 20px;
+  }
+  
+  .label {
+    font-size: 11px;
+    color: #a1a1aa;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #18181b;
+    margin: 4px 0 0;
+  
+    &.amber   { color: #f59e0b; }
+    &.blue    { color: #2563eb; }
+    &.emerald { color: #059669; }
+  }
