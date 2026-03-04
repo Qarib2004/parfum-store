@@ -88,7 +88,13 @@ export const productApi = {
 
   createProductWithImage: (data: CreateProductInput, file: File) => {
     const formData = new FormData();
-    Object.keys(data).forEach((key) => formData.append(key, data[key]));
+    Object.keys(data).forEach((key) => {
+      const value = data[key as keyof CreateProductInput];
+      if (value !== undefined) {
+        formData.append(key, String(value));
+      }
+    });
+    // Object.keys(data).forEach((key) => formData.append(key, data[key]));
     formData.append("image", file);
     return axiosInstance.post<ApiResponse<Product>>(
       "/products/with-image",
