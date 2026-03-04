@@ -70,7 +70,11 @@ export function ImageSearchWidget() {
   };
 
   const formatPrice = (n: number) =>
-    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }).format(n);
 
   return (
     <div className={styles.wrapper}>
@@ -84,7 +88,9 @@ export function ImageSearchWidget() {
                 <p className={styles.headerSub}>Find by photo</p>
               </div>
             </div>
-            <button className={styles.closeBtn} onClick={() => setOpen(false)}>✕</button>
+            <button className={styles.closeBtn} onClick={() => setOpen(false)}>
+              ✕
+            </button>
           </div>
 
           <div className={styles.body}>
@@ -96,7 +102,11 @@ export function ImageSearchWidget() {
                 onDragOver={(e) => e.preventDefault()}
               >
                 <span className={styles.dropIcon}>📷</span>
-                <p className={styles.dropText}>Drop an image here</p>
+                <p className={styles.dropText}>
+                  Drop an image here(If it doesn’t work, it means it’s not
+                  deployed, because the project is over 1GB, and you need to pay
+                  for deployment, and I’m just a student)
+                </p>
                 <p className={styles.dropSub}>or click to browse</p>
                 <input
                   ref={inputRef}
@@ -112,7 +122,11 @@ export function ImageSearchWidget() {
             ) : (
               <div className={styles.previewWrap}>
                 <div className={styles.previewRow}>
-                  <img src={preview} alt="Preview" className={styles.previewImg} />
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    className={styles.previewImg}
+                  />
                   <div className={styles.previewActions}>
                     <p className={styles.previewName}>{file?.name}</p>
                     <button className={styles.resetBtn} onClick={handleReset}>
@@ -152,13 +166,17 @@ export function ImageSearchWidget() {
                 {results.length > 0 && (
                   <div className={styles.results}>
                     <p className={styles.resultsLabel}>
-                      {results.length} match{results.length !== 1 ? "es" : ""} found
+                      {results.length} match{results.length !== 1 ? "es" : ""}{" "}
+                      found
                     </p>
                     {results.map((r, i) => (
                       <div key={r.id ?? i} className={styles.resultItem}>
                         <div className={styles.resultImage}>
                           {r.imageUrl ? (
-                            <img src={r.imageUrl} alt={r.name ?? r.title ?? ""} />
+                            <img
+                              src={r.imageUrl}
+                              alt={r.name ?? r.title ?? ""}
+                            />
                           ) : (
                             <span>✦</span>
                           )}
@@ -173,7 +191,9 @@ export function ImageSearchWidget() {
                             </p>
                           )}
                           {r.price != null && (
-                            <p className={styles.resultPrice}>{formatPrice(r.price)}</p>
+                            <p className={styles.resultPrice}>
+                              {formatPrice(r.price)}
+                            </p>
                           )}
                         </div>
                         {r.id && (
@@ -187,7 +207,10 @@ export function ImageSearchWidget() {
                       </div>
                     ))}
 
-                    <button className={styles.searchAgainBtn} onClick={handleReset}>
+                    <button
+                      className={styles.searchAgainBtn}
+                      onClick={handleReset}
+                    >
                       Search another image
                     </button>
                   </div>
