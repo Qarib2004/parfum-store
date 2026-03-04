@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { SocketProvider } from '@/providers/SocketProvider';
 import { QueryProvider } from "@/providers/QueryProvider";
+import { ImageSearchWidget } from "@/components/ImageSearchWidget";
 
 
 
@@ -30,6 +31,7 @@ export default function RootLayout({
       <QueryProvider>
           <SocketProvider>
         {children}
+        <ImageSearchWidget />
         <Toaster richColors position="top-right" />
         </SocketProvider>
         </QueryProvider>

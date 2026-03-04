@@ -1,0 +1,215 @@
+$bg:      #0c0c0d;
+$border:  rgba(255, 255, 255, 0.07);
+$text:    #f2f0eb;
+$muted:   rgba(242, 240, 235, 0.45);
+$accent:  #c9a96e;
+$surface: #161618;
+
+.section {
+  padding: 80px 48px;
+  border-top: 1px solid $border;
+
+  @media (max-width: 640px) { padding: 56px 20px; }
+}
+
+
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: $accent;
+  margin: 0 0 8px;
+}
+
+.heading {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  font-style: italic;
+  color: $text;
+  margin: 0;
+  line-height: 1.1;
+  font-family: 'Georgia', serif;
+}
+
+.viewAll {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $muted;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+
+  &:hover { color: $text; }
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: $border;
+  border: 1px solid $border;
+
+  @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+
+.card {
+  background: $bg;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s ease;
+
+  &:hover { background: $surface; }
+}
+
+.cardImage {
+  display: block;
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: $surface;
+  overflow: hidden;
+  text-decoration: none;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  &:hover img { transform: scale(1.04); }
+}
+
+.cardFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: $accent;
+  opacity: 0.3;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 12, 13, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  span {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: $text;
+    border-bottom: 1px solid $accent;
+    padding-bottom: 2px;
+  }
+
+  .cardImage:hover & { opacity: 1; }
+}
+
+.cardBody {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.cardInfo {
+  flex: 1;
+}
+
+.cardName {
+  font-size: 13px;
+  font-weight: 500;
+  color: $text;
+  margin: 0 0 4px;
+  letter-spacing: 0.03em;
+}
+
+.cardBrand {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $muted;
+  margin: 0;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardPrice {
+  font-size: 15px;
+  font-weight: 700;
+  color: $accent;
+  font-family: 'Georgia', serif;
+}
+
+.addBtn {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border: 1px solid $border;
+  background: transparent;
+  color: $muted;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+
+.skeleton {
+  background: $bg;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeletonImage {
+  aspect-ratio: 3 / 4;
+  background: $surface;
+}
+
+.skeletonBody {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bone {
+  border-radius: 2px;
+  background: $surface;
+
+  &.boneName  { height: 12px; width: 70%; }
+  &.boneSub   { height: 10px; width: 40%; }
+  &.bonePrice { height: 14px; width: 30%; margin-top: 8px; }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}

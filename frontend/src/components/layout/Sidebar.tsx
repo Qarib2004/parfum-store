@@ -30,7 +30,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
     { href: "/dashboard", label: "Home", icon: Home },
     { href: "/dashboard/products", label: "Products", icon: Package },
     { href: "/dashboard/shops", label: "Stores", icon: Store },
-    { href: "/dashboard/messages", label: "Messagets", icon: MessageSquare },
+    { href: "/dashboard/messages", label: "Messages", icon: MessageSquare },
     { href: "/dashboard/orders", label: "My orders", icon: ShoppingBag },
   ];
 
@@ -46,7 +46,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
   const adminLinks = [
     { href: "/dashboard/admin/requests", label: "Requests", icon: FileText },
-    { href: "/dashboard/admin/users", label: "Users", icon: Users },
+    // { href: "/dashboard/admin/users", label: "Users", icon: Users },
   ];
 
   return (

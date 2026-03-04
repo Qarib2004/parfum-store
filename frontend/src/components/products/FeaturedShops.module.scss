@@ -1,0 +1,184 @@
+$bg:      #0c0c0d;
+$border:  rgba(255, 255, 255, 0.07);
+$text:    #f2f0eb;
+$muted:   rgba(242, 240, 235, 0.45);
+$accent:  #c9a96e;
+$surface: #161618;
+
+.section {
+  padding: 80px 48px;
+  border-top: 1px solid $border;
+
+  @media (max-width: 640px) { padding: 56px 20px; }
+}
+
+
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: $accent;
+  margin: 0 0 8px;
+}
+
+.heading {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  font-style: italic;
+  color: $text;
+  margin: 0;
+  line-height: 1.1;
+  font-family: 'Georgia', serif;
+}
+
+.viewAll {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $muted;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+
+  &:hover { color: $text; }
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: $border;
+  border: 1px solid $border;
+
+  @media (max-width: 720px) { grid-template-columns: 1fr; }
+}
+
+
+.card {
+  background: $bg;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 24px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: $surface;
+
+    .arrow { color: $accent; transform: translateX(4px); }
+  }
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $surface;
+  border: 1px solid $border;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.avatarFallback {
+  font-size: 22px;
+  font-weight: 700;
+  color: $accent;
+  font-family: 'Georgia', serif;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text;
+  letter-spacing: 0.04em;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desc {
+  font-size: 12px;
+  color: $muted;
+  margin: 0 0 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $accent;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.arrow {
+  font-size: 16px;
+  color: $muted;
+  flex-shrink: 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+
+.skeleton {
+  background: $bg;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 24px;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeletonAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $surface;
+  flex-shrink: 0;
+}
+
+.skeletonBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bone {
+  border-radius: 2px;
+  background: $surface;
+
+  &.boneName { height: 13px; width: 55%; }
+  &.boneSub  { height: 10px; width: 35%; }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
