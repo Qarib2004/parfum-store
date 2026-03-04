@@ -104,7 +104,7 @@ export function ImageSearchWidget() {
                 <span className={styles.dropIcon}>📷</span>
                 <p className={styles.dropText}>
                   Drop an image here(If it doesn’t work, it means it’s not
-                  deployed, because the project is over 1GB, and you need to pay
+                  deployed, because the project is over 1GB, and I need to pay
                   for deployment, and I’m just a student)
                 </p>
                 <p className={styles.dropSub}>or click to browse</p>
