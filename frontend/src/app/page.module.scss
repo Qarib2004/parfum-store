@@ -1,12 +1,15 @@
-$bg:        #0c0c0d;
-$bg2:       #111113;
-$surface:   #161618;
-$border:    rgba(255, 255, 255, 0.07);
-$text:      #f2f0eb;
-$muted:     rgba(242, 240, 235, 0.45);
-$accent:    #c9a96e;
-$accent2:   #e8d5b0;
+$bg:        #f5f1ea;   
+$bg2:       #e9e1d6;  
 
+$surface:   #cbb79a;   
+
+$border:    rgba(0, 0, 0, 0.08);
+
+$text:      #2f2a24;  
+$muted:     rgba(145, 130, 113, 0.55);
+
+$accent:    #c8a96a;  
+$accent2:   #e6d3a3;   
 
 .page {
   background: $bg;
